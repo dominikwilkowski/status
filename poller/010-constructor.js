@@ -3,7 +3,7 @@
  * Application framework and settings
  *
  * Status, a network status tool in three acts
- * Act I: POLLER
+ * Act I: POLLER, the part of the application that polls services to record response time.
  *
  * @license    https://raw.githubusercontent.com/dominikwilkowski/status/master/LICENSE  GNU GPLv3
  * @author     Dominik Wilkowski  hi@dominik-wilkowski.com
@@ -17,9 +17,9 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+const Mongojs = require('mongojs');
 const CFonts = require(`cfonts`);
 const Chalk = require(`chalk`);
-const Fs = require(`fs`);
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -31,7 +31,21 @@ const Poller = (() => { //constructor factory
 // settings
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],  //Debug settings
-		DEBUGLEVEL: 2,   //Debug level setting
+		DEBUGLEVEL: 1,   //Debug level setting
+		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
+		QUEUE: [
+			{
+				ID: 'GUI website',
+				url: 'gel.westpacgroup.com.au',
+				kind: 'get',
+			},
+			{
+				ID: 'blender',
+				url: '128.199.200.220:8080',
+				kind: 'post',
+				form: {},
+			},
+		],
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

@@ -11,7 +11,7 @@
 Poller.init = () => {
 	Poller.debugging.headline(`DEBUG|INFO`, 2);
 
-	//
+	Poller.poll.init();
 };
 
 
