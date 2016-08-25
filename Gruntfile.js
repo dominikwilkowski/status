@@ -2,17 +2,20 @@
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 //
-//                                                ██████╗  ██╗   ██╗ ██╗      ██████╗   ██████╗   ██████╗ ███████╗
-//                                               ██╔════╝  ██║   ██║ ██║      ██╔══██╗ ██╔═══██╗ ██╔════╝ ██╔════╝
-//                                               ██║  ███╗ ██║   ██║ ██║      ██║  ██║ ██║   ██║ ██║      ███████╗
-//                                               ██║   ██║ ██║   ██║ ██║      ██║  ██║ ██║   ██║ ██║      ╚════██║
-//                                               ╚██████╔╝ ╚██████╔╝ ██║      ██████╔╝ ╚██████╔╝ ╚██████╗ ███████║
-//                                                ╚═════╝   ╚═════╝  ╚═╝      ╚═════╝   ╚═════╝   ╚═════╝ ╚══════╝
-//                                                                       Created by Westpac Design Delivery Team
-// @desc     GUI docs
+//               _____/\\\\\\\\\\\____/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\\\\\\\\\\\\\__/\\\________/\\\_____/\\\\\\\\\\\___
+//                ___/\\\/////////\\\_\///////\\\/////____/\\\\\\\\\\\\\__\///////\\\/////__\/\\\_______\/\\\___/\\\/////////\\\_
+//                 __\//\\\______\///________\/\\\________/\\\/////////\\\_______\/\\\_______\/\\\_______\/\\\__\//\\\______\///__
+//                  ___\////\\\_______________\/\\\_______\/\\\_______\/\\\_______\/\\\_______\/\\\_______\/\\\___\////\\\_________
+//                   ______\////\\\____________\/\\\_______\/\\\\\\\\\\\\\\\_______\/\\\_______\/\\\_______\/\\\______\////\\\______
+//                    _________\////\\\_________\/\\\_______\/\\\/////////\\\_______\/\\\_______\/\\\_______\/\\\_________\////\\\___
+//                     __/\\\______\//\\\________\/\\\_______\/\\\_______\/\\\_______\/\\\_______\//\\\______/\\\___/\\\______\//\\\__
+//                      _\///\\\\\\\\\\\/_________\/\\\_______\/\\\_______\/\\\_______\/\\\________\///\\\\\\\\\/___\///\\\\\\\\\\\/___
+//                       ___\///////////___________\///________\///________\///________\///___________\/////////_______\///////////_____
+//                                                                       Created by Dominik Wilkowski
+// @desc     Status, a network status tool in three acts
 // @author   Dominik Wilkowski
-// @website  https://github.com/WestpacCXTeam/GUI-docs
-// @issues   https://github.com/WestpacCXTeam/GUI-docs/issues
+// @website  https://github.com/dominikwilkowski/status
+// @issues   https://github.com/dominikwilkowski/status/issues
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -31,11 +34,36 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 var SETTINGS = function() {
 	return {
-		'folder': {
-			'fileserver': 'remote',
-			'serverProd': 'remote/server.js',
-			'serverDev': 'remote/server-dev.js',
-			'Packagejson': 'remote/package.json',
+		folder: {
+			poller: 'poller/',
+			server: 'server/',
+			page: 'page/',
+			dev: '_dev/',
+			prod: '_prod/',
+		},
+		file: {
+			poller: 'poller.js',
+			server: 'server.js',
+			page: 'page.js',
+			Packagejson: 'package.json',
+		},
+		replace: {
+			dev: [
+				{ from: '[debugcomment]', to: '' },
+				{ from: '[prodcomment]', to: '// ' },
+				{ from: '[Debug]', to: 'true' },
+				{ from: '[-Debug-]', to: '[Debug]' },
+				{ from: '[Name-Version]', to: '<%= pkg.name %> - v<%= pkg.version %>' },
+				{ from: '[Version]', to: 'v<%= pkg.version %>' },
+			],
+			prod: [
+				{ from: '[debugcomment]', to: '// ' },
+				{ from: '[prodcomment]', to: '' },
+				{ from: '[Debug]', to: 'false' },
+				{ from: '[-Debug-]', to: '[Debug]' },
+				{ from: '[Name-Version]', to: '<%= pkg.name %> - v<%= pkg.version %>' },
+				{ from: '[Version]', to: 'v<%= pkg.version %>' },
+			],
 		},
 	};
 };
@@ -67,77 +95,57 @@ module.exports = function(grunt) {
 		// Package content
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		SETTINGS: SETTINGS(),
-		pkg: grunt.file.readJSON( SETTINGS().folder.Packagejson ),
+		pkg: grunt.file.readJSON( SETTINGS().file.Packagejson ),
 
 
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		// Replace version
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		replace: {
-			debugDev: {
+			pollerDev: {
 				src: [
-					'<%= SETTINGS.folder.serverDev %>',
+					'<%= SETTINGS.folder.dev %><%= SETTINGS.file.poller %>',
 				],
 				overwrite: true,
-				replacements: [
-					{
-						from: '[debugcomment]',
-						to: '',
-					},
-					{
-						from: '[prodcomment]',
-						to: '// ',
-					},
-					{
-						from: '[Debug]',
-						to: 'true',
-					},
-					{
-						from: '[-Debug-]',
-						to: '[Debug]',
-					},
-					{
-						from: '[Name-Version]',
-						to: '<%= pkg.name %> - v<%= pkg.version %>',
-					},
-					{
-						from: '[Version]',
-						to: 'v<%= pkg.version %>',
-					},
+				replacements: SETTINGS().replace.dev,
+			},
+			pollerProd: {
+				src: [
+					'<%= SETTINGS.folder.prod %><%= SETTINGS.file.poller %>',
 				],
+				overwrite: true,
+				replacements: SETTINGS().replace.prod,
 			},
 
-			debugProd: {
+			serverDev: {
 				src: [
-					'<%= SETTINGS.folder.serverProd %>',
+					'<%= SETTINGS.folder.dev %><%= SETTINGS.file.server %>',
 				],
 				overwrite: true,
-				replacements: [
-					{
-						from: '[debugcomment]',
-						to: '// ',
-					},
-					{
-						from: '[prodcomment]',
-						to: '',
-					},
-					{
-						from: '[Debug]',
-						to: 'false',
-					},
-					{
-						from: '[-Debug-]',
-						to: '[Debug]',
-					},
-					{
-						from: '[Name-Version]',
-						to: '<%= pkg.name %> - v<%= pkg.version %>',
-					},
-					{
-						from: '[Version]',
-						to: 'v<%= pkg.version %>',
-					},
+				replacements: SETTINGS().replace.dev,
+			},
+			serverProd: {
+				src: [
+					'<%= SETTINGS.folder.prod %><%= SETTINGS.file.server %>',
 				],
+				overwrite: true,
+				replacements: SETTINGS().replace.prod,
+			},
+
+			pageDev: {
+				src: [
+					'<%= SETTINGS.folder.dev %><%= SETTINGS.file.page %>',
+				],
+				overwrite: true,
+				replacements: SETTINGS().replace.dev,
+			},
+
+			pageProd: {
+				src: [
+					'<%= SETTINGS.folder.prod %><%= SETTINGS.file.page %>',
+				],
+				overwrite: true,
+				replacements: SETTINGS().replace.prod,
 			},
 		},
 
@@ -146,21 +154,43 @@ module.exports = function(grunt) {
 		// Concat files
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		concat: {
-			nodeProd: {
+			pollerDev: {
 				src: [
-					'<%= SETTINGS.folder.fileserver %>/*.js',
-					'!<%= SETTINGS.folder.serverProd %>',
-					'!<%= SETTINGS.folder.serverDev %>',
+					'<%= SETTINGS.folder.poller %>/*.js',
 				],
-				dest: '<%= SETTINGS.folder.serverProd %>',
+				dest: '<%= SETTINGS.folder.dev %><%= SETTINGS.file.poller %>',
 			},
-			nodeDev: {
+			pollerProd: {
 				src: [
-					'<%= SETTINGS.folder.fileserver %>/*.js',
-					'!<%= SETTINGS.folder.serverProd %>',
-					'!<%= SETTINGS.folder.serverDev %>',
+					'<%= SETTINGS.folder.poller %>/*.js',
 				],
-				dest: '<%= SETTINGS.folder.serverDev %>',
+				dest: '<%= SETTINGS.folder.prod %><%= SETTINGS.file.poller %>',
+			},
+
+			serverDev: {
+				src: [
+					'<%= SETTINGS.folder.server %>/*.js',
+				],
+				dest: '<%= SETTINGS.folder.dev %><%= SETTINGS.file.server %>',
+			},
+			serverProd: {
+				src: [
+					'<%= SETTINGS.folder.server %>/*.js',
+				],
+				dest: '<%= SETTINGS.folder.prod %><%= SETTINGS.file.server %>',
+			},
+
+			pageDev: {
+				src: [
+					'<%= SETTINGS.folder.page %>/*.js',
+				],
+				dest: '<%= SETTINGS.folder.dev %><%= SETTINGS.file.page %>',
+			},
+			pageProd: {
+				src: [
+					'<%= SETTINGS.folder.page %>/*.js',
+				],
+				dest: '<%= SETTINGS.folder.prod %><%= SETTINGS.file.page %>',
 			},
 		},
 
@@ -171,12 +201,12 @@ module.exports = function(grunt) {
 		font: {
 			options: {
 				space: false,
-				maxLength: 11,
+				align: 'center',
 				colors: ['blue', 'gray'],
 			},
 
 			title: {
-				text: '| blender',
+				text: '|status',
 			},
 		},
 
@@ -198,16 +228,32 @@ module.exports = function(grunt) {
 		// Watch
 		//----------------------------------------------------------------------------------------------------------------------------------------------------------
 		watch: {
-			node: {
+			poller: {
 				files: [
-					'<%= SETTINGS.folder.fileserver %>/*.js',
-					'!<%= SETTINGS.folder.fileserver %>/server.js',
-					'!<%= SETTINGS.folder.fileserver %>/server-dev.js',
+					'<%= SETTINGS.folder.poller %>/*.js',
 				],
 				tasks: [
-					'_buildNode',
-					'replace',
-					'replace',
+					'_buildPoller',
+					'wakeup',
+				],
+			},
+
+			server: {
+				files: [
+					'<%= SETTINGS.folder.server %>/*.js',
+				],
+				tasks: [
+					'_buildServer',
+					'wakeup',
+				],
+			},
+
+			page: {
+				files: [
+					'<%= SETTINGS.folder.page %>/*.js',
+				],
+				tasks: [
+					'_buildPage',
 					'wakeup',
 				],
 			},
@@ -220,9 +266,25 @@ module.exports = function(grunt) {
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Private tasks
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
-	grunt.registerTask('_buildNode', [
-		'concat',
-		'replace',
+	grunt.registerTask('_buildPoller', [
+		'concat:pollerDev',
+		'concat:pollerProd',
+		'replace:pollerDev',
+		'replace:pollerProd',
+	]);
+
+	grunt.registerTask('_buildServer', [
+		'concat:serverDev',
+		'concat:serverProd',
+		'replace:serverDev',
+		'replace:serverProd',
+	]);
+
+	grunt.registerTask('_buildPage', [
+		'concat:pageDev',
+		'concat:pageProd',
+		'replace:pageDev',
+		'replace:pageProd',
 	]);
 
 
@@ -231,8 +293,9 @@ module.exports = function(grunt) {
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	grunt.registerTask('default', [ //run build with watch
 		'font:title',
-		'_buildNode',
-		'replace',
+		'_buildPoller',
+		'_buildServer',
+		'_buildPage',
 		'wakeup',
 		'watch',
 	]);
