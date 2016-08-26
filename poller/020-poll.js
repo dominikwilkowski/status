@@ -30,7 +30,7 @@ Poller.poll = (() => {
 		let start = Date.now(); //starting timing
 
 		if( item.kind === 'get' ) { //GET method
-			Poller.debugging.report(`request: shooting off GET request`, 1);
+			Poller.debugging.send(`request: shooting off GET request`, 1);
 
 			return new Promise(function( resolve, reject ) {
 				Http.get({ host: item.url }, ( error, response ) => {
@@ -45,7 +45,7 @@ Poller.poll = (() => {
 		}
 
 		else if( item.kind === 'post' ) {  //POST method
-			Poller.debugging.report(`request: shooting off POST request`, 1);
+			Poller.debugging.send(`request: shooting off POST request`, 1);
 
 			return new Promise(function( resolve, reject ) {
 				Request.post({
@@ -79,6 +79,8 @@ Poller.poll = (() => {
 
 			for( let item of Poller.QUEUE ) {
 				request( item ).then(( item ) => {
+
+					Poller.debugging.received(`poll.init: ${item.ID} with ${item.time}ms`, 1);
 
 					Poller.db.save({
 						ID: item.ID,

@@ -35,7 +35,7 @@ const Poller = (() => { //constructor factory
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 		QUEUE: [
 			{
-				ID: 'GUI website',
+				ID: 'website',
 				url: 'gel.westpacgroup.com.au',
 				kind: 'get',
 			},
