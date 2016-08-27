@@ -7,9 +7,15 @@
  **************************************************************************************************************************************************************/
 
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Dependencies
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+const Moment = require('moment');
+
+
 Poller.db = (() => {
 
-	const DB = Poller.DATABASE.collection('data')
+	const DB = Poller.DATABASE.collection('data'); //database collection
 
 	return {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -21,12 +27,15 @@ Poller.db = (() => {
 		save: ( item ) => {
 			Poller.debugging.report(`Running db.save for ${item.ID}`, 1);
 
+			item.date = new Date();
+			item.expireAt = Moment().add( Poller.MAXDAYS, 'd' ).toDate(); //expire after Poller.MAXDAYS days
+
 			DB.insert(item, ( error, thisInsert ) => {
 				if( error || !thisInsert ) {
-					Poller.debugging.error(`db.save: DB insert error: ${error}`, 3);
+					Poller.log.error(`db.save: DB insert error: ${error}`);
 				}
 				else {
-					Poller.debugging.report(`db.save: saved ${item.ID}`, 2);
+					Poller.debugging.report(`db.save: saved ${item.ID}`, 1);
 
 					return thisInsert._id; //last insert ID
 				}

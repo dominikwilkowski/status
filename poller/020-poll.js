@@ -10,64 +10,66 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-const Http = require('http');
 const Request = require('request');
+const Http = require('http');
 
 
 Poller.poll = (() => {
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Private function
-// converting, [add string to text]
+// request a service and keep the time.
 //
-// @param  [item]  {object}   The item object with options in format: { ID: '[string]', url: '[string]', kind: '[keyword] get|post', form: [object] }
+// @param  [item]  {object}   The item object with options in format: { ID: '[string]', options: '[object]' }
 //
 // @return         {promise}  An {object} in format: { ID: '[string]', time: [integer] }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	const request = ( item ) => {
-		Poller.debugging.report(`Running request for "${item.ID}"`, 1);
+		Poller.debugging.send(`Running request for "${item.ID}"`, 2);
 
-		let start = Date.now(); //starting timing
+		item.options.headers = { 'User-Agent': 'status-poller' }; //fixed header
+		item.options.timeout = Poller.TIMEOUT;
 
-		if( item.kind === 'get' ) { //GET method
-			Poller.debugging.send(`request: shooting off GET request`, 1);
+		return new Promise(function( resolve, reject ) {
+			let start = Date.now(); //starting timing
 
-			return new Promise(function( resolve, reject ) {
-				Http.get({ host: item.url }, ( error, response ) => {
-					error = response = ''; //cleaning up after myself
-
-					resolve({ //we return ID and time so we know what time goes where in the DB
+			Request( item.options, ( error, response ) => {
+				if( error ) {
+					reject({ //we return ID for DB
 						ID: item.ID,
-						time: ( Date.now() - start )
+						error: error.code,
 					});
+				}
+
+				resolve({
+					ID: item.ID,
+					time: ( Date.now() - start ),
 				});
 			});
-		}
+		});
+	}
 
-		else if( item.kind === 'post' ) {  //POST method
-			Poller.debugging.send(`request: shooting off POST request`, 1);
 
-			return new Promise(function( resolve, reject ) {
-				Request.post({
-					url: item.url,
-					form: item.form,
-					encoding: 'binary',
-					headers: {
-						'User-Agent': 'ping',
-					},
-				}, ( error, response ) => {
-					error = response = ''; //cleaning up after myself
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Private function
+// Check if the queue is empty
+//
+// @param  [counter]  {integer}   The counter of how many requests have resolved or rejected so far
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	const checkLast = ( counter ) => {
+		Poller.debugging.report(`Running checkLast with "${counter}"`, 1);
 
-					resolve({
-						ID: item.ID,
-						time: ( Date.now() - start )
-					});
-				});
-			});
+		if( counter >= Poller.QUEUE.length ) { //if there are no more requests
+			Poller.debugging.report(`checkLast: last iteration reached`, 2);
 
+			Poller.DATABASE.close();
+
+			Poller.log.info(`Poll(${Poller.QUEUE.length}) finished`);
 		}
 	}
 
+
+	let counter = 0; //for counting all callbacks and closing mongo connection after
 
 	return {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -78,16 +80,35 @@ Poller.poll = (() => {
 			Poller.debugging.report(`Running poll.init`, 1);
 
 			for( let item of Poller.QUEUE ) {
-				request( item ).then(( item ) => {
+				request( item )
 
-					Poller.debugging.received(`poll.init: ${item.ID} with ${item.time}ms`, 1);
+					//on resolve
+					.then(( item ) => {
+						Poller.debugging.received(`poll.init: ${item.ID} with ${item.time}ms`, 3);
 
-					Poller.db.save({
-						ID: item.ID,
-						time: item.time,
-						date: new Date(),
-					});
+						counter ++; //count requests
 
+						Poller.db.save({ //save into DB
+							ID: item.ID,
+							time: item.time,
+						});
+
+						checkLast( counter ); //close connection after last request
+					})
+
+					//on reject
+					.catch(( item ) => {
+						Poller.debugging.error(`poll.init: failed to request ${item.ID} with ${item.error}`, 3);
+
+						Poller.db.save({ //save into DB
+							ID: item.ID,
+							time: -1,
+							error: item.error,
+						});
+
+						counter ++; //count requests
+
+						checkLast( counter ); //close connection after last request
 				});
 			};
 		},

@@ -33,17 +33,47 @@ const Poller = (() => { //constructor factory
 		DEBUG: [Debug],  //Debug settings
 		DEBUGLEVEL: 1,   //Debug level setting
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
+		TIMEOUT: 2500,   //when we stop waiting for the request and call it a fail
+		MAXDAYS: 31,     //how many days of data we retain in the database
 		QUEUE: [
 			{
-				ID: 'website',
-				url: 'gel.westpacgroup.com.au',
-				kind: 'get',
+				ID: 'getNormal',
+				options: {
+					uri: 'http://localhost:8081',
+					method: 'GET',
+				},
 			},
 			{
-				ID: 'blender',
-				url: '128.199.200.220:8080',
-				kind: 'post',
-				form: {},
+				ID: 'postNormal',
+				options: {
+					uri: 'http://localhost:8081',
+					method: 'POST',
+					form: {},
+					encoding: 'binary',
+				},
+			},
+			{
+				ID: 'getDelayed',
+				options: {
+					uri: 'http://localhost:8080',
+					method: 'GET',
+				},
+			},
+			{
+				ID: 'postDelayed',
+				options: {
+					uri: 'http://localhost:8080',
+					method: 'POST',
+					form: {},
+					encoding: 'binary',
+				},
+			},
+			{
+				ID: 'notExist',
+				options: {
+					uri: 'http://192.241.237.199',
+					method: 'GET',
+				},
 			},
 		],
 
@@ -103,7 +133,7 @@ const Poller = (() => { //constructor factory
 
 			error: ( text, level = 99 ) => {
 				if( Poller.DEBUG && level >= Poller.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.red(' \u2612  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgRed(`\n${Chalk.white(' \u2612  ')} ${Chalk.white(`${text} `)}`));
 				}
 			},
 
@@ -115,13 +145,13 @@ const Poller = (() => { //constructor factory
 
 			send: ( text, level = 99 ) => {
 				if( Poller.DEBUG && level >= Poller.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.bold.cyan(' \u219D  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgBlue(`\n${Chalk.bold.white(' \u219D  ')} ${Chalk.white(`${text} `)}`));
 				}
 			},
 
 			received: ( text, level = 99 ) => {
 				if( Poller.DEBUG && level >= Poller.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.bold.cyan(' \u219C  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgGreen(`\n${Chalk.bold.black(' \u219C  ')} ${Chalk.black(`${text} `)}`));
 				}
 			}
 		},
