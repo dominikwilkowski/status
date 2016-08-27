@@ -33,6 +33,11 @@ const Server = (() => { //constructor factory
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],  //Debug settings
 		DEBUGLEVEL: 1,   //Debug level setting
+		TIMEFRAME: [     //allowed keywords for time frame
+			'day',
+			'week',
+			'month',
+		],
 		SERVER: Restify.createServer({ name: 'Status-Server' }), //start server
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 

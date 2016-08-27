@@ -17,9 +17,7 @@ Server.init = () => {
 		.use( Restify.bodyParser() );
 
 	//routes
-	Server.SERVER.get( '/status/day', Server.get.day )
-	Server.SERVER.get( '/status/week', Server.get.week )
-	Server.SERVER.get( '/status/month', Server.get.month );
+	Server.SERVER.get( '/status/:period/:ID', Server.data.get )
 
 	Server.SERVER
 		//server
