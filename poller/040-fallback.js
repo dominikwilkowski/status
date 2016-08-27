@@ -1,41 +1,42 @@
 /***************************************************************************************************************************************************************
  *
- * Application initialization
+ * Fallback module
+ *
+ * Fallback defines what happens when one service is not reachable for various reasons.
  *
  **************************************************************************************************************************************************************/
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Initiate application
+// Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-Poller.init = () => {
-	Poller.debugging.headline(`DEBUG|INFO`, 999);
-
-	//check if we have more than one index installed
-	Poller.DATABASE.collection('data').getIndexes(( error, indexes ) => {
-		if( indexes.length < 2 ) { //if there is no index installed
-			Poller.debugging.report(`Installing index`, 2);
-
-			Poller.DATABASE.collection('data').createIndex( { "expireAt": 1 }, { expireAfterSeconds: 0 } ); //set index on expireAt
-		}
-	});
-
-	Poller.TIME = Date.now(); //save timing for log
-
-	Poller.poll.init(); //start polling
-};
+const Slack = require('node-slack');
 
 
+Poller.fallback = (() => {
+
+	return {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-// Close application/connection to DB
+// Public function
+// Determine wheather and what fallback is to be taken.
+//
+// @param  [item]  {object}   The ID and error in format: { ID: '[string]', error: '[string] error code' }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-Poller.close = () => {
-	Poller.debugging.report(`Running close`, 1);
+		run: ( item ) => {
+			Poller.debugging.report(`Running fallback.run for ${item.ID}`, 1);
 
-	Poller.DATABASE.close(); //close connection
+			if( item.error === 'ETIMEDOUT' ) {
+				Poller.debugging.report(`Reporting ${item.ID} failure to slack`, 2);
 
-	Poller.log.info(`Poll(${Poller.QUEUE.length}) finished in ${( Date.now() - Poller.TIME )}ms`); //report for log
-};
+				const slack = new Slack( Poller.SLACKURL );
 
+				slack.send({
+					'text': `ERROR! ${item.ID} down!`,
+					'channel': `#status-errors`,
+					'username': `Network Status Poller`,
+				});
+			}
+		},
 
-Poller.init(); //start right away
+	}
+})();

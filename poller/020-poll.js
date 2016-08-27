@@ -62,9 +62,7 @@ Poller.poll = (() => {
 		if( counter >= Poller.QUEUE.length ) { //if there are no more requests
 			Poller.debugging.report(`checkLast: last iteration reached`, 2);
 
-			Poller.DATABASE.close();
-
-			Poller.log.info(`Poll(${Poller.QUEUE.length}) finished`);
+			Poller.close();
 		}
 	}
 
@@ -88,7 +86,7 @@ Poller.poll = (() => {
 
 						counter ++; //count requests
 
-						Poller.db.save({ //save into DB
+						Poller.db.save({ //save time into DB
 							ID: item.ID,
 							time: item.time,
 						});
@@ -100,11 +98,13 @@ Poller.poll = (() => {
 					.catch(( item ) => {
 						Poller.debugging.error(`poll.init: failed to request ${item.ID} with ${item.error}`, 3);
 
-						Poller.db.save({ //save into DB
+						Poller.db.save({ //save error into DB
 							ID: item.ID,
 							time: -1,
 							error: item.error,
 						});
+
+						Poller.fallback.run({ ID: item.ID, error: item.error }); //run fallback
 
 						counter ++; //count requests
 
