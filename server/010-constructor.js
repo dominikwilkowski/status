@@ -17,6 +17,8 @@
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Dependencies
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+const Restify = require(`restify`);
+const Mongojs = require('mongojs');
 const CFonts = require(`cfonts`);
 const Chalk = require(`chalk`);
 
@@ -30,7 +32,9 @@ const Server = (() => { //constructor factory
 // settings
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],  //Debug settings
-		DEBUGLEVEL: 2,   //Debug level setting
+		DEBUGLEVEL: 1,   //Debug level setting
+		SERVER: Restify.createServer({ name: 'Status-Server' }), //start server
+		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Debugging prettiness
@@ -87,7 +91,7 @@ const Server = (() => { //constructor factory
 
 			error: ( text, level = 99 ) => {
 				if( Server.DEBUG && level >= Server.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.red(' \u2612  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgRed(`\n${Chalk.white(' \u2612  ')} ${Chalk.white(`${text} `)}`));
 				}
 			},
 
@@ -99,13 +103,13 @@ const Server = (() => { //constructor factory
 
 			send: ( text, level = 99 ) => {
 				if( Server.DEBUG && level >= Server.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.bold.cyan(' \u219D  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgBlue(`\n${Chalk.bold.white(' \u219D  ')} ${Chalk.white(`${text} `)}`));
 				}
 			},
 
 			received: ( text, level = 99 ) => {
 				if( Server.DEBUG && level >= Server.DEBUGLEVEL ) {
-					console.log(Chalk.bgWhite(`\n${Chalk.bold.cyan(' \u219C  ')} ${Chalk.black(`${text} `)}`));
+					console.log(Chalk.bgGreen(`\n${Chalk.bold.black(' \u219C  ')} ${Chalk.black(`${text} `)}`));
 				}
 			}
 		},
