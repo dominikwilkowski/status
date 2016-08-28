@@ -4,7 +4,7 @@ STATUS
 > TODO intro
 
 
-### Content
+## Content
 
 * [Install](#install)
 * [Build](#build)
@@ -16,46 +16,61 @@ STATUS
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-### Install
+## Install
 
-#### Poller
+### Poller
 
 TODO instructions
 
-##### CRON task
+#### CRON task
 
-To make sure the poller is started when the system has to reboot, make sure you add a cron task after reboot:
+TODO instructions
 
 ```shell
-chmod 700 /www/status/starter.sh #the starter.sh of this repo
 crontab -e
 ```
 
 and add:
 
 ```shell
-@reboot /www/status/starter.sh
+*/10 * * * * /usr/bin/node /var/www/html/path/to/poller.js >> /var/log/status-poller.log
 ```
 
-##### FOREVER node deamon
+### Server
+
+TODO instructions
+
+#### CRON task
+
+```shell
+chmod 700 /www/status/starterServer.sh #the starterServer.sh of this repo
+crontab -e
+```
+
+and add:
+
+```shell
+@reboot /var/www/html/path/to/starterServer.sh #run after reboot
+```
+
+#### FOREVER node deamon
 
 Now we still have to make sure the node app is restarted if it crashes for some uncaught reason. Install [forever](https://github.com/foreverjs/forever) and
 register the task:
 
 ```shell
 npm i forever -g
-forever start -l status.log --append -o statusOut.log -e statusError.log poller.js
+forever start -l status.log --append -o statusOut.log -e statusError.log server.js
 ```
 
-#### Server
 
-TODO instructions
+**[⬆ back to top](#content)**
 
-##### CRON task
 
-TODO instructions
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-##### FOREVER node deamon
+
+## Build
 
 TODO instructions
 
@@ -66,7 +81,7 @@ TODO instructions
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-### Build
+## Tests
 
 TODO instructions
 
@@ -77,18 +92,7 @@ TODO instructions
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-### Tests
-
-TODO instructions
-
-
-**[⬆ back to top](#content)**
-
-
-----------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-### Release History remote
+## Release History remote
 
 * v0.1.0 - What I started with
 
@@ -98,7 +102,7 @@ TODO instructions
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-### License
+## License
 
 Copyright (c) Dominik Wilkowski. Licensed under the [GNU GPLv3](https://raw.githubusercontent.com/dominikwilkowski/status/master/LICENSE).
 

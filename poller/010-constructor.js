@@ -32,7 +32,7 @@ const Poller = (() => { //constructor factory
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],  //Debug settings
 		DEBUGLEVEL: 3,   //Debug level setting
-		TIMEOUT: 2500,   //when we stop waiting for the request and call it a fail
+		TIMEOUT: 3500,   //when we stop waiting for the request and call it a fail
 		MAXDAYS: 31,     //how many days of data we retain in the database
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 		SLACKURL: `https://hooks.slack.com/services/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`, //slack API URL

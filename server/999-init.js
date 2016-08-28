@@ -21,7 +21,7 @@ Server.init = () => {
 
 	Server.SERVER
 		//server
-		.listen(8081, () => {
+		.listen(1338, () => {
 				Server.debugging.report(`Running server on http://localhost:8081`, 1);
 	});
 };

@@ -46,12 +46,12 @@ Server.data = (() => {
 
 			//options for timeframes
 			if( request.params.period === 'week' ) {
-				timestamp = Moment().subtract( 1, 'h' ).toDate();
+				timestamp = Moment().subtract( 7, 'd' ).toDate();
 				interval = 7;
 			}
 
 			if( request.params.period === 'month' ) {
-				timestamp = Moment().subtract( 3, 'd' ).toDate();
+				timestamp = Moment().subtract( 30, 'd' ).toDate();
 				interval = 30;
 			}
 
