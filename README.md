@@ -43,7 +43,7 @@ TODO instructions
 #### CRON task
 
 ```shell
-chmod 700 /www/status/starterServer.sh #the starterServer.sh of this repo
+chmod 700 /var/www/html/path/to/starterServer.sh #the starterServer.sh of this repo
 crontab -e
 ```
 
