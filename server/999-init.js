@@ -13,7 +13,7 @@ Server.init = () => {
 
 	Server.SERVER
 		//plugins
-		.use( Restify.fullResponse() )
+		// .use( Restify.fullResponse() )
 		.use( Restify.bodyParser() );
 
 	//routes
