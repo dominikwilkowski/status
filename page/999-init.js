@@ -29,13 +29,17 @@
 			var keyCode = e.keyCode || e.which;
 
 			if(keyCode == 9) {
-				GUI.debugging( 'GUI: Tab detected', 'report' );
+				Page.debugging( 'Page: Tab detected', 'report' );
 
 				$('html').addClass('is-keyboarduser');
 
 				$('body').off('keydown');
 			}
 		});
+
+		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
+
+		Page.data.get(); //get data and go from there
 	};
 
 }(Page));

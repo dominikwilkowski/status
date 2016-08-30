@@ -24,6 +24,12 @@ var Page = (function() {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],   //Enable/disable debugger
 		DEBUGfilter: [],  //filter debug messages
+		ENDPOINTS: 'https://gel.westpacgroup.com.au:8081/status/', //Where the server sits
+		TIMEFRAME: [      //allowed keywords for time frame
+			'day',
+			'week',
+			'month',
+		],
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,12 +42,12 @@ var Page = (function() {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		debugging: function Debug( text, code ) {
 
-			if( GUI.DEBUGfilter.length > 0 ) {
+			if( Page.DEBUGfilter.length > 0 ) {
 				var identifier = text.split(': ');
 				var output = '';
 
-				for(var i = GUI.DEBUGfilter.length - 1; i >= 0; i--) {
-					if( identifier[0] === GUI.DEBUGfilter[i] ) {
+				for(var i = Page.DEBUGfilter.length - 1; i >= 0; i--) {
+					if( identifier[0] === Page.DEBUGfilter[i] ) {
 						output = text;
 					}
 				};
@@ -49,7 +55,7 @@ var Page = (function() {
 				text = output;
 			}
 
-			if( GUI.DEBUG && text.length > 0 ) {
+			if( Page.DEBUG && text.length > 0 ) {
 				if( code === 'headline' ) {
 					console.log('%c' + text, 'font-size: 25px;');
 				}
