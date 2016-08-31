@@ -76,6 +76,23 @@ const Poller = (() => { //constructor factory
 					method: 'GET',
 				},
 			},
+
+			// {
+			// 	ID: 'GUI',
+			// 	options: {
+			// 		uri: 'https://gel.westpacgroup.com.au/GUI/WBC/',
+			// 		method: 'GET',
+			// 	},
+			// },
+			// {
+			// 	ID: 'blender',
+			// 	options: {
+			// 		uri: 'https://gel.westpacgroup.com.au:8080/blender',
+			// 		method: 'POST',
+			// 		form: {},
+			// 		encoding: 'binary',
+			// 	},
+			// },
 		],
 
 

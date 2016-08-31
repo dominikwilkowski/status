@@ -25,7 +25,7 @@ Poller.fallback = (() => {
 		run: ( item ) => {
 			Poller.debugging.report(`Running fallback.run for ${item.ID}`, 1);
 
-			if( item.error === 'ETIMEDOUT' ) {
+			if( item.error === 'ETIMEDOUT' && !Poller.DEBUG ) {
 				Poller.debugging.report(`Reporting ${item.ID} failure to slack`, 2);
 
 				const slack = new Slack( Poller.SLACKURL );

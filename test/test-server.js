@@ -4,9 +4,11 @@ const Http = require('http');
 const delayed = Http.createServer(( request, response ) => {
 	console.log(`request received for delayed server via ${request.method}`);
 
+	var timeout = Math.random() * (4000 - 10) + 10; //randomize the response time
+
 	setTimeout(() => {
 		response.end(`sent data`);
-	}, 3000);
+	}, timeout);
 });
 
 delayed.listen(8080, () => {

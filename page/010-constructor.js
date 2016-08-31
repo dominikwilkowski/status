@@ -30,6 +30,7 @@ var Page = (function() {
 			'week',
 			'month',
 		],
+		ADDITIONS: {},    //storing additional infos like mean and available here for later reuse
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

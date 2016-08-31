@@ -33,6 +33,7 @@ const Server = (() => { //constructor factory
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],  //Debug settings
 		DEBUGLEVEL: 1,   //Debug level setting
+		PORT: 1338,      //port server is listening on
 		TIMEFRAME: [     //allowed keywords for time frame
 			'day',
 			'week',

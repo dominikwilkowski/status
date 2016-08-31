@@ -43,7 +43,7 @@ Poller.poll = (() => {
 
 				resolve({
 					ID: item.ID,
-					time: ( Date.now() - start ),
+					time: Math.floor( ( Date.now() - start ) / 2 ), //only time one way
 				});
 			});
 		});

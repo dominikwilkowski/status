@@ -33,6 +33,7 @@ const Server = (() => { //constructor factory
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: false,  //Debug settings
 		DEBUGLEVEL: 1,   //Debug level setting
+		PORT: 1338,      //port server is listening on
 		TIMEFRAME: [     //allowed keywords for time frame
 			'day',
 			'week',
@@ -249,7 +250,7 @@ Server.init = () => {
 
 	Server.SERVER
 		//plugins
-		// .use( Restify.fullResponse() )
+		// .use( Restify.fullResponse() ) //we only need headers locally as we have node behind a proxy in prod
 		.use( Restify.bodyParser() );
 
 	//routes
@@ -257,8 +258,8 @@ Server.init = () => {
 
 	Server.SERVER
 		//server
-		.listen(1338, () => {
-				Server.debugging.report(`Running server on http://localhost:8081`, 1);
+		.listen(Server.PORT, () => {
+				Server.debugging.report(`Running server on http://localhost:${Server.PORT}`, 1);
 	});
 };
 

@@ -40,6 +40,13 @@
 		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
 
 		Page.data.get(); //get data and go from there
+
+		//making the charts responsive of sorts
+		$(window).resize(function() {
+			$('.js-rendered').removeClass('js-rendered');
+
+			Page.data.get();
+		});
 	};
 
 }(Page));

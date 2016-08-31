@@ -676,6 +676,7 @@ var Page = (function() {
 			'week',
 			'month',
 		],
+		ADDITIONS: {},    //storing additional infos like mean and available here for later reuse
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -746,13 +747,64 @@ var Page = (function() {
 	var module = {};
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Private function
+	// Reformat the data for graph ussage
+	//
+	// @param  [data]    {object}   The unformatted data coming for the RESTful API
+	// @param  [ID]      {string}   The ID of the dataset
+	// @param  [period]  {keyword}  The period/timeframe of the data
+	//
+	// @return         {object}  Formated data object
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	function format( data, ID, period ) {
+		Page.debugging( 'Running private data.format', 'report' );
+
+		var graphData = [];         //the new data to-be
+		var mean = 0;               //mean of the data
+		var availability = 0;       //availability
+		var IDstring = ID + period; //ID string for Page.ADDITIONS
+
+		Page.ADDITIONS[ IDstring ] = {};
+
+		for(var i = 0; i < data.length; i++) { //format data
+			var annotation = null;
+			var annotationText = null;
+			var date = moment( data[i].date ).format('MMMM Do YYYY, h:mm a').toString();
+
+			if( data[i].time === -1 ) {
+				annotation = 'Down';
+				annotationText = 'The service was down on ' + date;
+				data[i].time = 0;
+				availability ++;
+			}
+			else {
+				mean += parseInt( data[i].time );
+			}
+
+			graphData.push([
+				moment( data[i].date ).toDate(), //the time we polled the server
+				parseInt( data[i].time ),        //the response time
+				date + ': ' + data[i].time + 'ms', //text for the tooltip
+				annotation,
+				annotationText,
+			]);
+		}
+
+		Page.ADDITIONS[ IDstring ].mean = ( Math.round( ( mean / data.length ) * 100 ) / 100 ) + 'ms';
+		Page.ADDITIONS[ IDstring ].availability = ( Math.round( ( ( data.length - availability ) / data.length ) * 100000 ) / 1000 ) + '%';
+
+		return graphData;
+	}
+
+
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Public function
 	// get data from server and move it to Page.render
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.get = function() {
 		Page.debugging( 'Running data.get', 'report' );
 
-		$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each element for toggling
+		$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each graph for rendering
 			var $this = $(this); //each element to be rendered one by one
 			var ID = $this.attr('data-id');
 			var period = $this.attr('data-period');
@@ -774,14 +826,14 @@ var Page = (function() {
 
 						$this.addClass('js-rendered');
 
-						Page.render.graph( $this, period, data );
+						Page.render.graph( $this, ID, period, format( data, ID, period ) );
 					},
 					error: function(jqXHR, status, errorThrown) {
 						Page.debugging( 'Data error for ' + ID, 'error' );
 
 						$this
 							.addClass('has-error')
-							.text('Could not reach the server: ' + status);
+							.text('Could not reach the server: ' + errorThrown);
 					}
 				});
 
@@ -811,16 +863,16 @@ var Page = (function() {
 	// render all elements on the page that have not been rendered
 	//
 	// @param  [$graph]  {jQuery object}  The DOM element that has to be converted to a graph
+	// @param  [ID]        {string}         The ID of the dataset
 	// @param  [period]  {keyword}        The period/timeframe of the data
 	// @param  [data]    {object}         The data to be graphed out
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
-	module.graph = function( $graph, period, data ) {
+	module.graph = function( $graph, ID, period, graphData ) {
 		Page.debugging( 'Running render.graph', 'report' );
 
 		google.charts.setOnLoadCallback( function() {
 			var graph = new google.visualization.DataTable();
 			var chart = new google.visualization.LineChart( $graph[0] ); //the DOM element to be replaced
-			var graphData = []; //we have to reformat the data we get from the server
 
 			graph.addColumn('date', 'Date');
 			graph.addColumn('number', 'Response time');
@@ -828,26 +880,43 @@ var Page = (function() {
 				type: 'string',
 				role: 'tooltip',
 			});
-
-			for(var i = 0; i < data.length; i++) { //format data
-				graphData.push([
-					moment( data[i].date ).toDate(), //the time we polled the server
-					parseInt( data[i].time ),        //the response time
-					moment( data[i].date ).format('MMMM Do YYYY, h:mm a').toString() + ': ' + data[i].time + 'ms', //text for the tooltip
-				]);
-			}
+			graph.addColumn({ //We need annitations to show when the server was down
+				type: 'string',
+				role: 'annotation',
+			});
+			graph.addColumn({ //some text for those annotations is nice
+				type: 'string',
+				role: 'annotationText',
+			});
 
 			graph.addRows( graphData );
 
 			chart.draw(graph, { //chart options
-				colors: ['#000'],
+				title: 'The network response time of ' + ID + ' for a ' + period,
+				titlePosition: 'none',
+				colors: ['#42a5f5'],
+				backgroundColor: '#263238',
 				hAxis: {
-					title: 'Date',
 					slantedText: false,
 					maxAlternation: 1,
+					textStyle: {
+						color: '#fff',
+					},
+					gridlines: {
+						color: '#556E79',
+					},
 				},
 				vAxis: {
 					title: 'Response time',
+					titleTextStyle: {
+						color: '#42a5f5',
+					},
+					textStyle: {
+						color: '#fff',
+					},
+					gridlines: {
+						color: '#556E79',
+					},
 				},
 				legend: {
 					position: 'none'
@@ -856,18 +925,64 @@ var Page = (function() {
 					width: '500',
 					height: '200'
 				},
-				// trendlines: {
-				// 	0: {
-				// 		color: 'blue',
-				// 		lineWidth: 1,
-				// 	},
-				// },
-				width: 600,
+				annotations: {
+					textStyle: {
+						color: '#c80038',
+					},
+					stem: {
+						color: '#c80038',
+						length: 202,
+					},
+				},
+				tooltip: {
+					isHtml: true,
+				},
 				height: 270,
 			});
 
 			$graph.addClass('is-rendered'); //add class so we can remove the loading pseudo element
+
+			//iterate over each mean addition for rendering
+			$('.js-status-mean[data-ID="' + ID + '"][data-period="' + period + '"]').not('.js-rendered').each(function iterateAvailability() {
+				Page.render.addition( $(this), 'mean', $(this).attr('data-id'), $(this).attr('data-period') );
+			});
+
+			//iterate over each availability addition for rendering
+			$('.js-status-availability[data-ID="' + ID + '"][data-period="' + period + '"]').not('.js-rendered').each(function iterateAvailability() {
+				Page.render.addition( $(this), 'availability', $(this).attr('data-id'), $(this).attr('data-period') );
+			});
 		});
+	};
+
+
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// Public function
+	// render additions
+	//
+	// @param  [$element]  {jQuery object}  The DOM element that has to be converted
+	// @param  [addition]  {keyword}        What kind of addition is it
+	// @param  [ID]        {string}         The ID of the dataset
+	// @param  [period]    {keyword}        The period/timeframe of the data
+	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
+	module.addition = function( $element, addition, ID, period ) {
+		Page.debugging( 'Running render.addition', 'report' );
+
+		var IDstring = ID + period; //ID string for Page.ADDITIONS
+		var content = Page.ADDITIONS[ IDstring ];
+
+		if( content !== undefined && content[ addition ] !== undefined ) {
+			$element
+				.text( content[ addition ] )
+				.addClass('js-rendered');
+		}
+		else {
+			console.log('??!!');
+			$element
+				.addClass('has-error')
+				.text( content );
+		}
+
+		$element.addClass('js-rendered');
 	};
 
 
@@ -916,6 +1031,13 @@ var Page = (function() {
 		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
 
 		Page.data.get(); //get data and go from there
+
+		//making the charts responsive of sorts
+		$(window).resize(function() {
+			$('.js-rendered').removeClass('js-rendered');
+
+			Page.data.get();
+		});
 	};
 
 }(Page));
