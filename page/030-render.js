@@ -22,7 +22,7 @@
 	module.graph = function( $graph, ID, period ) {
 		Page.debugging( 'Running render.graph', 'report' );
 
-		let graphData = Page.DATA[ ID + period ]; //where we stored the data in the Page.data module
+		var graphData = Page.DATA[ ID + period ]; //where we stored the data in the Page.data module
 
 		if( graphData === undefined ) { //no data = no graph
 			Page.debugging( 'render.graph: No data available for "' + ID + period + '"', 'error' );
