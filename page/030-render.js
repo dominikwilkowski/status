@@ -58,6 +58,7 @@
 					titlePosition: 'none', //we certainly don’t want to show it
 					colors: ['#42a5f5'], //the line color
 					backgroundColor: '#263238', //background color duh!
+					lineWidth: 1,
 					hAxis: {
 						slantedText: false, //nah that looks weird
 						maxAlternation: 1, //no alternating multiple lines
