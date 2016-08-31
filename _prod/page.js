@@ -835,7 +835,7 @@ var Page = (function() {
 					Page.render.graph( $element, ID, period ); //gender the graph now that we have the data
 				},
 				error: function(jqXHR, status, errorThrown) {
-					Page.debugging( 'Data error for ' + ID, 'error' );
+					Page.debugging( 'Data error for ' + ID + ' with: ' + errorThrown, 'error' );
 
 					$element //mark graph element as broken
 						.addClass('has-error')
@@ -874,7 +874,7 @@ var Page = (function() {
 	module.graph = function( $graph, ID, period ) {
 		Page.debugging( 'Running render.graph', 'report' );
 
-		let graphData = Page.DATA[ ID + period ]; //where we stored the data in the Page.data module
+		var graphData = Page.DATA[ ID + period ]; //where we stored the data in the Page.data module
 
 		if( graphData === undefined ) { //no data = no graph
 			Page.debugging( 'render.graph: No data available for "' + ID + period + '"', 'error' );
