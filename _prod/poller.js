@@ -76,6 +76,23 @@ const Poller = (() => { //constructor factory
 					method: 'GET',
 				},
 			},
+
+			// {
+			// 	ID: 'GUI',
+			// 	options: {
+			// 		uri: 'https://gel.westpacgroup.com.au/GUI/WBC/',
+			// 		method: 'GET',
+			// 	},
+			// },
+			// {
+			// 	ID: 'blender',
+			// 	options: {
+			// 		uri: 'https://gel.westpacgroup.com.au:8080/blender',
+			// 		method: 'POST',
+			// 		form: {},
+			// 		encoding: 'binary',
+			// 	},
+			// },
 		],
 
 
@@ -229,7 +246,7 @@ Poller.poll = (() => {
 
 				resolve({
 					ID: item.ID,
-					time: ( Date.now() - start ),
+					time: Math.floor( ( Date.now() - start ) / 2 ), //only time one way
 				});
 			});
 		});
@@ -374,7 +391,7 @@ Poller.fallback = (() => {
 		run: ( item ) => {
 			Poller.debugging.report(`Running fallback.run for ${item.ID}`, 1);
 
-			if( item.error === 'ETIMEDOUT' ) {
+			if( item.error === 'ETIMEDOUT' && !Poller.DEBUG ) {
 				Poller.debugging.report(`Reporting ${item.ID} failure to slack`, 2);
 
 				const slack = new Slack( Poller.SLACKURL );
