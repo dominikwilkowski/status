@@ -39,13 +39,25 @@
 
 		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
 
-		Page.data.get(); //get data and go from there
+		$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each graph element for rendering
+			var $this = $(this);
+			var ID = $this.attr('data-id');
+			var period = $this.attr('data-period');
+
+			Page.data.get( $this, ID, period ); //get data
+		});
 
 		//making the charts responsive of sorts
 		$(window).resize(function() {
 			$('.js-rendered').removeClass('js-rendered');
 
-			Page.data.get();
+			$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each graph element for rendering
+				var $this = $(this);
+				var ID = $this.attr('data-id');
+				var period = $this.attr('data-period');
+
+				Page.render.graph( $this, ID, period ); //render graph
+			});
 		});
 	};
 
