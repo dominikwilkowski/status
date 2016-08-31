@@ -24,12 +24,13 @@ var Page = (function() {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: [Debug],   //Enable/disable debugger
 		DEBUGfilter: [],  //filter debug messages
-		ENDPOINTS: 'https://gel.westpacgroup.com.au:8081/status/', //Where the server sits
+		ENDPOINTS: 'http://localhost:1338/status/', //Where the server sits
 		TIMEFRAME: [      //allowed keywords for time frame
 			'day',
 			'week',
 			'month',
 		],
+		DATA: {},         //storing data so we don’t look it up every time we render
 		ADDITIONS: {},    //storing additional infos like mean and available here for later reuse
 
 

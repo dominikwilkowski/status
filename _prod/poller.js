@@ -20,6 +20,7 @@
 const Mongojs = require('mongojs');
 const CFonts = require(`cfonts`);
 const Chalk = require(`chalk`);
+const Fs = require(`fs`);
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -36,64 +37,8 @@ const Poller = (() => { //constructor factory
 		MAXDAYS: 31,     //how many days of data we retain in the database
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 		SLACKURL: `https://hooks.slack.com/services/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`, //slack API URL
-		QUEUE: [
-			{
-				ID: 'getNormal',
-				options: {
-					uri: 'http://localhost:8081',
-					method: 'GET',
-				},
-			},
-			{
-				ID: 'postNormal',
-				options: {
-					uri: 'http://localhost:8081',
-					method: 'POST',
-					form: {},
-					encoding: 'binary',
-				},
-			},
-			{
-				ID: 'getDelayed',
-				options: {
-					uri: 'http://localhost:8080',
-					method: 'GET',
-				},
-			},
-			{
-				ID: 'postDelayed',
-				options: {
-					uri: 'http://localhost:8080',
-					method: 'POST',
-					form: {},
-					encoding: 'binary',
-				},
-			},
-			{
-				ID: 'notExist',
-				options: {
-					uri: 'http://192.241.237.199',
-					method: 'GET',
-				},
-			},
-
-			// {
-			// 	ID: 'GUI',
-			// 	options: {
-			// 		uri: 'https://gel.westpacgroup.com.au/GUI/WBC/',
-			// 		method: 'GET',
-			// 	},
-			// },
-			// {
-			// 	ID: 'blender',
-			// 	options: {
-			// 		uri: 'https://gel.westpacgroup.com.au:8080/blender',
-			// 		method: 'POST',
-			// 		form: {},
-			// 		encoding: 'binary',
-			// 	},
-			// },
-		],
+		// QUEUE: JSON.parse(Fs.readFileSync('../queue-dev.json', 'utf8')),
+		QUEUE: JSON.parse(Fs.readFileSync('queue.json', 'utf8')),
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

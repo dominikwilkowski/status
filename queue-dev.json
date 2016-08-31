@@ -1,0 +1,39 @@
+[{
+	"ID": "getNormal",
+	"options": {
+		"uri": "http://localhost:8081",
+		"method": "GET"
+	}
+},
+{
+	"ID": "postNormal",
+	"options": {
+		"uri": "http://localhost:8081",
+		"method": "POST",
+		"form": {},
+		"encoding": "binary"
+	}
+},
+{
+	"ID": "getDelayed",
+	"options": {
+		"uri": "http://localhost:8080",
+		"method": "GET"
+	}
+},
+{
+	"ID": "postDelayed",
+	"options": {
+		"uri": "http://localhost:8080",
+		"method": "POST",
+		"form": {},
+		"encoding": "binary"
+	}
+},
+{
+	"ID": "notExist",
+	"options": {
+		"uri": "http://192.241.237.199",
+		"method": "GET"
+	}
+}]
