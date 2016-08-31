@@ -37,8 +37,7 @@ const Poller = (() => { //constructor factory
 		MAXDAYS: 31,     //how many days of data we retain in the database
 		DATABASE: Mongojs( 'mongodb://127.0.0.1:27017/status', ['data'] ), //mongo DB connection
 		SLACKURL: `https://hooks.slack.com/services/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`, //slack API URL
-		[debugcomment]QUEUE: JSON.parse(Fs.readFileSync('../queue-dev.json', 'utf8')),
-		[prodcomment]QUEUE: JSON.parse(Fs.readFileSync('queue.json', 'utf8')),
+		QUEUE: JSON.parse(Fs.readFileSync('queue.json', 'utf8')),
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
