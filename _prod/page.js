@@ -835,7 +835,7 @@ var Page = (function() {
 					Page.render.graph( $element, ID, period ); //gender the graph now that we have the data
 				},
 				error: function(jqXHR, status, errorThrown) {
-					Page.debugging( 'Data error for ' + ID, 'error' );
+					Page.debugging( 'Data error for ' + ID + ' with: ' + errorThrown, 'error' );
 
 					$element //mark graph element as broken
 						.addClass('has-error')
