@@ -13,7 +13,7 @@ Server.init = () => {
 
 	Server.SERVER
 		//plugins
-		// .use( Restify.fullResponse() )
+		[debugcomment].use( Restify.fullResponse() ) //we only need headers locally as we have node behind a proxy in prod
 		.use( Restify.bodyParser() );
 
 	//routes
@@ -21,8 +21,8 @@ Server.init = () => {
 
 	Server.SERVER
 		//server
-		.listen(1338, () => {
-				Server.debugging.report(`Running server on http://localhost:8081`, 1);
+		.listen(Server.PORT, () => {
+				Server.debugging.report(`Running server on http://localhost:${Server.PORT}`, 1);
 	});
 };
 
