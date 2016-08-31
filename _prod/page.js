@@ -670,7 +670,8 @@ var Page = (function() {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 		DEBUG: false,   //Enable/disable debugger
 		DEBUGfilter: [],  //filter debug messages
-		ENDPOINTS: 'http://localhost:1338/status/', //Where the server sits
+		// ENDPOINTS: 'http://localhost:1338/status/', //Where the server sits
+		ENDPOINTS: 'https://gel.westpacgroup.com.au:8081/status/', //Where the server sits
 		TIMEFRAME: [      //allowed keywords for time frame
 			'day',
 			'week',
