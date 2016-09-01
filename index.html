@@ -23,6 +23,7 @@
 	</script>
 
 	<style type="text/css">
+		/* stuff you need to get the graph to look good */
 		body {
 			background: #263238;
 			color: #fff;
@@ -82,6 +83,90 @@
 				-webkit-filter:hue-rotate(-360deg)
 			}
 		}
+
+		/* page design */
+		body {
+			font-family: sans-serif;
+			color: #fff;
+			line-height: 1.2;
+		}
+
+		a {
+			color: #fff;
+		}
+
+		a:hover {
+			color: #42a5f5;
+		}
+
+		.container {
+			max-width: 900px;
+			margin: 3em auto;
+			padding: 0 1em;
+		}
+
+		.subtitle {
+			color: #42a5f5;
+			font-size: 14px;
+		}
+
+		.headline {
+			font-family: serif;
+			font-weight: 100;
+			font-size: 60px;
+			margin: 0 0 1em 0;
+			line-height: 0.8;
+		}
+
+		.headline small {
+			font-family: sans-serif;
+			text-transform: uppercase;
+			font-weight: 900;
+		}
+
+		.intro {
+			line-height: 2;
+		}
+
+		.row {
+			overflow: hidden;
+		}
+
+		.addition {
+			float:  left;
+			width: 50%;
+			font-size: 30px;
+			font-weight: 100;
+		}
+
+		.addition.addition_right {
+			text-align: right;
+		}
+
+		.addition strong {
+			display: block;
+			font-weight: 900;
+		}
+
+		@media screen and (min-width : 640px) {
+			.col-left {
+				float: left;
+			}
+
+			.col-right {
+				float: right;
+				width: 70%;
+			}
+
+			.addition {
+				float: none;
+				width: auto;
+			}
+
+			.addition.addition_right {
+				text-align: left;
+			}
+		}
 	</style>
 
 	<!--[if lt IE 9]>
@@ -101,94 +186,54 @@
 		<p role="alert">This website needs JavaScript to work properly.</p>
 	</noscript>
 
-	<h1>Graphs</h1>
+	<a href="https://github.com/dominikwilkowski/status">
+		<img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png">
+	</a>
 
-	<p>
-		See below a couple examples for the graphs currently hosted at https://gel.westpacgroup.com.au:8081/status/.
-	</p>
+	<div class="container">
+		<span class="subtitle">
+			A network status tool in three acts
+		</span>
 
-	<h2>GUI</h2>
+		<h1 class="headline">
+			<small>Network</small>
+			Status
+		</h1>
 
-	<h3>Day</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="GUI" data-period="day"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="GUI" data-period="day"></strong>
-	</p>
-	<div class="js-status graph" data-id="GUI" data-period="day"></div>
+		<div class="row">
+			<div class="col-left">
+				<div class="row">
+					<p class="addition">
+						Availability
+						<strong class="js-status-availability stats" data-id="fake" data-period="week"></strong>
+					</p>
+					<p class="addition addition_right">
+						Mean
+						<strong class="js-status-mean stats" data-id="fake" data-period="week"></strong>
+					</p>
+				</div>
+			</div>
 
-	<h3>Week</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="GUI" data-period="week"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="GUI" data-period="week"></strong>
-	</p>
-	<div class="js-status graph" data-id="GUI" data-period="week"></div>
+			<div class="col-right">
+				<div class="js-status-fake graph" data-id="fake" data-period="week"></div>
+			</div>
+		</div>
 
-	<h3>Month</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="GUI" data-period="month"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="GUI" data-period="month"></strong>
-	</p>
-	<div class="js-status graph" data-id="GUI" data-period="month"></div>
-
-
-	<hr>
-	<h2>blender</h2>
-
-	<h3>Day</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="blender" data-period="day"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="blender" data-period="day"></strong>
-	</p>
-	<div class="js-status graph" data-id="blender" data-period="day"></div>
-
-	<h3>Week</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="blender" data-period="week"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="blender" data-period="week"></strong>
-	</p>
-	<div class="js-status graph" data-id="blender" data-period="week"></div>
-
-	<h3>Month</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="blender" data-period="month"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="blender" data-period="month"></strong>
-	</p>
-	<div class="js-status graph" data-id="blender" data-period="month"></div>
-
-	<hr>
-	<h2>Errors</h2>
-
-	<h3>wrong period</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="blender" data-period="whatever"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="blender" data-period="whatever"></strong>
-	</p>
-	<div class="js-status graph" data-id="GUI" data-period="whatever"></div>
-
-	<h3>Not found</h3>
-	<p>
-		Availability: <strong class="js-status-availability stats" data-id="notfound" data-period="day"></strong>
-	</p>
-	<p>
-		Mean: <strong class="js-status-mean stats" data-id="notfound" data-period="day"></strong>
-	</p>
-	<div class="js-status graph" data-id="notfound" data-period="day"></div>
-
+		<p class="intro">
+			Learn <a href="https://github.com/dominikwilkowski/status">how to set up your own network monitor</a> and create a page like this.
+			This code it open source under the <a href="https://raw.githubusercontent.com/dominikwilkowski/status/master/LICENSE">GLPv3 license</a>.
+		</p>
 
 	<script src="_prod/page.js"></script>
+	<script type="text/javascript">
+		Page.DATA['fakeweek'] = [[new Date("2016-08-31T06:50:02.896Z"),91,"August 31st 2016, 4:50 pm: 91ms",null,null],[new Date("2016-08-31T07:00:03.121Z"),106,"August 31st 2016, 5:00 pm: 106ms",null,null],[new Date("2016-08-31T07:10:02.083Z"),88,"August 31st 2016, 5:10 pm: 88ms",null,null],[new Date("2016-08-31T07:20:02.105Z"),91,"August 31st 2016, 5:20 pm: 91ms",null,null],[new Date("2016-08-31T07:30:02.105Z"),105,"August 31st 2016, 5:30 pm: 105ms",null,null],[new Date("2016-08-31T07:40:02.233Z"),127,"August 31st 2016, 5:40 pm: 127ms",null,null],[new Date("2016-08-31T07:50:02.242Z"),104,"August 31st 2016, 5:50 pm: 104ms",null,null],[new Date("2016-08-31T08:00:02.816Z"),119,"August 31st 2016, 6:00 pm: 119ms",null,null],[new Date("2016-08-31T08:10:03.148Z"),96,"August 31st 2016, 6:10 pm: 96ms",null,null],[new Date("2016-08-31T08:20:02.208Z"),63,"August 31st 2016, 6:20 pm: 63ms",null,null],[new Date("2016-08-31T08:30:02.284Z"),100,"August 31st 2016, 6:30 pm: 100ms",null,null],[new Date("2016-08-31T08:40:02.673Z"),123,"August 31st 2016, 6:40 pm: 123ms",null,null],[new Date("2016-08-31T08:50:02.895Z"),91,"August 31st 2016, 6:50 pm: 91ms",null,null],[new Date("2016-08-31T09:00:03.279Z"),76,"August 31st 2016, 7:00 pm: 76ms",null,null],[new Date("2016-08-31T09:10:02.452Z"),93,"August 31st 2016, 7:10 pm: 93ms",null,null],[new Date("2016-08-31T09:20:02.576Z"),98,"August 31st 2016, 7:20 pm: 98ms",null,null],[new Date("2016-08-31T09:30:02.793Z"),115,"August 31st 2016, 7:30 pm: 115ms",null,null],[new Date("2016-08-31T09:40:03.113Z"),121,"August 31st 2016, 7:40 pm: 121ms",null,null],[new Date("2016-08-31T09:50:02.152Z"),77,"August 31st 2016, 7:50 pm: 77ms",null,null],[new Date("2016-08-31T10:00:02.154Z"),83,"August 31st 2016, 8:00 pm: 83ms",null,null],[new Date("2016-08-31T10:10:02.128Z"),86,"August 31st 2016, 8:10 pm: 86ms",null,null],[new Date("2016-08-31T10:20:02.106Z"),55,"August 31st 2016, 8:20 pm: 55ms",null,null],[new Date("2016-08-31T10:30:02.775Z"),130,"August 31st 2016, 8:30 pm: 130ms",null,null],[new Date("2016-08-31T10:40:02.896Z"),113,"August 31st 2016, 8:40 pm: 113ms",null,null],[new Date("2016-08-31T10:50:02.996Z"),71,"August 31st 2016, 8:50 pm: 71ms",null,null],[new Date("2016-08-31T11:00:02.585Z"),93,"August 31st 2016, 9:00 pm: 93ms",null,null],[new Date("2016-08-31T11:10:02.729Z"),61,"August 31st 2016, 9:10 pm: 61ms",null,null],[new Date("2016-08-31T11:20:02.928Z"),81,"August 31st 2016, 9:20 pm: 81ms",null,null],[new Date("2016-08-31T11:30:02.916Z"),86,"August 31st 2016, 9:30 pm: 86ms",null,null],[new Date("2016-08-31T11:40:01.920Z"),64,"August 31st 2016, 9:40 pm: 64ms",null,null],[new Date("2016-08-31T11:50:02.124Z"),124,"August 31st 2016, 9:50 pm: 124ms",null,null],[new Date("2016-08-31T12:00:02.653Z"),108,"August 31st 2016, 10:00 pm: 108ms",null,null],[new Date("2016-08-31T12:10:02.793Z"),87,"August 31st 2016, 10:10 pm: 87ms",null,null],[new Date("2016-08-31T12:20:03.671Z"),64,"August 31st 2016, 10:20 pm: 64ms",null,null],[new Date("2016-08-31T12:30:02.614Z"),81,"August 31st 2016, 10:30 pm: 81ms",null,null],[new Date("2016-08-31T12:40:02.755Z"),86,"August 31st 2016, 10:40 pm: 86ms",null,null],[new Date("2016-08-31T12:50:02.782Z"),95,"August 31st 2016, 10:50 pm: 95ms",null,null],[new Date("2016-08-31T13:00:02.813Z"),68,"August 31st 2016, 11:00 pm: 68ms",null,null],[new Date("2016-08-31T13:10:03.157Z"),115,"August 31st 2016, 11:10 pm: 115ms",null,null],[new Date("2016-08-31T13:20:02.211Z"),63,"August 31st 2016, 11:20 pm: 63ms",null,null],[new Date("2016-08-31T13:30:03.201Z"),83,"August 31st 2016, 11:30 pm: 83ms",null,null],[new Date("2016-08-31T13:40:02.652Z"),70,"August 31st 2016, 11:40 pm: 70ms",null,null],[new Date("2016-08-31T13:50:02.610Z"),59,"August 31st 2016, 11:50 pm: 59ms",null,null],[new Date("2016-08-31T14:00:02.724Z"),93,"September 1st 2016, 12:00 am: 93ms",null,null],[new Date("2016-08-31T14:10:03.196Z"),85,"September 1st 2016, 12:10 am: 85ms",null,null],[new Date("2016-08-31T14:20:02.851Z"),436,"September 1st 2016, 12:20 am: 436ms",null,null],[new Date("2016-08-31T14:30:02.958Z"),88,"September 1st 2016, 12:30 am: 88ms",null,null],[new Date("2016-08-31T14:40:02.160Z"),69,"September 1st 2016, 12:40 am: 69ms",null,null],[new Date("2016-08-31T14:50:02.095Z"),84,"September 1st 2016, 12:50 am: 84ms",null,null],[new Date("2016-08-31T15:00:02.342Z"),125,"September 1st 2016, 1:00 am: 125ms",null,null],[new Date("2016-08-31T15:10:02.321Z"),88,"September 1st 2016, 1:10 am: 88ms",null,null],[new Date("2016-08-31T15:20:03.483Z"),106,"September 1st 2016, 1:20 am: 106ms",null,null],[new Date("2016-08-31T15:30:02.670Z"),92,"September 1st 2016, 1:30 am: 92ms",null,null],[new Date("2016-08-31T15:40:02.827Z"),79,"September 1st 2016, 1:40 am: 79ms",null,null],[new Date("2016-08-31T15:50:02.932Z"),122,"September 1st 2016, 1:50 am: 122ms",null,null],[new Date("2016-08-31T16:00:03.095Z"),92,"September 1st 2016, 2:00 am: 92ms",null,null],[new Date("2016-08-31T16:10:02.279Z"),148,"September 1st 2016, 2:10 am: 148ms",null,null],[new Date("2016-08-31T16:20:02.655Z"),151,"September 1st 2016, 2:20 am: 151ms",null,null],[new Date("2016-08-31T16:30:02.894Z"),111,"September 1st 2016, 2:30 am: 111ms",null,null],[new Date("2016-08-31T16:40:03.034Z"),80,"September 1st 2016, 2:40 am: 80ms",null,null],[new Date("2016-08-31T16:50:02.666Z"),194,"September 1st 2016, 2:50 am: 194ms",null,null],[new Date("2016-08-31T17:00:03.126Z"),119,"September 1st 2016, 3:00 am: 119ms",null,null],[new Date("2016-08-31T17:10:02.184Z"),86,"September 1st 2016, 3:10 am: 86ms",null,null],[new Date("2016-08-31T17:20:02.164Z"),72,"September 1st 2016, 3:20 am: 72ms",null,null],[new Date("2016-08-31T17:30:02.437Z"),123,"September 1st 2016, 3:30 am: 123ms",null,null],[new Date("2016-08-31T17:40:02.866Z"),58,"September 1st 2016, 3:40 am: 58ms",null,null],[new Date("2016-08-31T17:50:02.878Z"),68,"September 1st 2016, 3:50 am: 68ms",null,null],[new Date("2016-08-31T18:00:03.161Z"),97,"September 1st 2016, 4:00 am: 97ms",null,null],[new Date("2016-08-31T18:10:02.163Z"),79,"September 1st 2016, 4:10 am: 79ms",null,null],[new Date("2016-08-31T18:20:02.147Z"),99,"September 1st 2016, 4:20 am: 99ms",null,null],[new Date("2016-08-31T18:30:02.556Z"),93,"September 1st 2016, 4:30 am: 93ms",null,null],[new Date("2016-08-31T18:40:02.773Z"),148,"September 1st 2016, 4:40 am: 148ms",null,null],[new Date("2016-08-31T18:50:02.762Z"),66,"September 1st 2016, 4:50 am: 66ms",null,null],[new Date("2016-08-31T19:00:03.447Z"),99,"September 1st 2016, 5:00 am: 99ms",null,null],[new Date("2016-08-31T19:10:02.778Z"),80,"September 1st 2016, 5:10 am: 80ms",null,null],[new Date("2016-08-31T19:20:03.717Z"),94,"September 1st 2016, 5:20 am: 94ms",null,null],[new Date("2016-08-31T19:30:02.975Z"),107,"September 1st 2016, 5:30 am: 107ms",null,null],[new Date("2016-08-31T19:40:02.102Z"),91,"September 1st 2016, 5:40 am: 91ms",null,null],[new Date("2016-08-31T19:50:01.937Z"),57,"September 1st 2016, 5:50 am: 57ms",null,null],[new Date("2016-08-31T20:00:03.050Z"),104,"September 1st 2016, 6:00 am: 104ms",null,null],[new Date("2016-08-31T20:10:02.218Z"),127,"September 1st 2016, 6:10 am: 127ms",null,null],[new Date("2016-08-31T20:20:03.551Z"),145,"September 1st 2016, 6:20 am: 145ms",null,null],[new Date("2016-08-31T20:30:03.734Z"),119,"September 1st 2016, 6:30 am: 119ms",null,null],[new Date("2016-08-31T20:40:03.129Z"),133,"September 1st 2016, 6:40 am: 133ms",null,null],[new Date("2016-08-31T20:50:02.303Z"),87,"September 1st 2016, 6:50 am: 87ms",null,null],[new Date("2016-08-31T21:00:02.315Z"),94,"September 1st 2016, 7:00 am: 94ms",null,null],[new Date("2016-08-31T21:10:02.200Z"),73,"September 1st 2016, 7:10 am: 73ms",null,null],[new Date("2016-08-31T21:20:02.381Z"),105,"September 1st 2016, 7:20 am: 105ms",null,null],[new Date("2016-08-31T21:30:02.695Z"),163,"September 1st 2016, 7:30 am: 163ms",null,null],[new Date("2016-08-31T21:40:02.934Z"),124,"September 1st 2016, 7:40 am: 124ms",null,null],[new Date("2016-08-31T21:50:03.065Z"),0,"September 1st 2016, 7:50 am: 61ms","Down","The service was down on September 1st 2016, 7:50 am"],[new Date("2016-08-31T22:00:02.334Z"),95,"September 1st 2016, 8:00 am: 95ms",null,null],[new Date("2016-08-31T22:10:02.607Z"),102,"September 1st 2016, 8:10 am: 102ms",null,null],[new Date("2016-08-31T22:20:02.837Z"),95,"September 1st 2016, 8:20 am: 95ms",null,null],[new Date("2016-08-31T22:30:03.044Z"),115,"September 1st 2016, 8:30 am: 115ms",null,null],[new Date("2016-08-31T22:40:02.229Z"),88,"September 1st 2016, 8:40 am: 88ms",null,null],[new Date("2016-08-31T22:50:02.580Z"),140,"September 1st 2016, 8:50 am: 140ms",null,null],[new Date("2016-08-31T23:00:02.760Z"),123,"September 1st 2016, 9:00 am: 123ms",null,null],[new Date("2016-08-31T23:10:02.928Z"),88,"September 1st 2016, 9:10 am: 88ms",null,null],[new Date("2016-08-31T23:20:01.916Z"),83,"September 1st 2016, 9:20 am: 83ms",null,null],[new Date("2016-08-31T23:30:02.899Z"),69,"September 1st 2016, 9:30 am: 69ms",null,null],[new Date("2016-08-31T23:40:03.280Z"),66,"September 1st 2016, 9:40 am: 66ms",null,null],[new Date("2016-08-31T23:50:02.351Z"),83,"September 1st 2016, 9:50 am: 83ms",null,null],[new Date("2016-09-01T00:00:02.456Z"),80,"September 1st 2016, 10:00 am: 80ms",null,null],[new Date("2016-09-01T00:10:02.528Z"),69,"September 1st 2016, 10:10 am: 69ms",null,null],[new Date("2016-09-01T00:20:02.805Z"),102,"September 1st 2016, 10:20 am: 102ms",null,null],[new Date("2016-09-01T00:30:03.117Z"),94,"September 1st 2016, 10:30 am: 94ms",null,null],[new Date("2016-09-01T00:40:02.447Z"),100,"September 1st 2016, 10:40 am: 100ms",null,null],[new Date("2016-09-01T00:50:03.584Z"),132,"September 1st 2016, 10:50 am: 132ms",null,null],[new Date("2016-09-01T01:00:02.660Z"),75,"September 1st 2016, 11:00 am: 75ms",null,null],[new Date("2016-09-01T01:10:02.999Z"),140,"September 1st 2016, 11:10 am: 140ms",null,null],[new Date("2016-09-01T01:20:02.482Z"),175,"September 1st 2016, 11:20 am: 175ms",null,null],[new Date("2016-09-01T01:30:03.153Z"),102,"September 1st 2016, 11:30 am: 102ms",null,null],[new Date("2016-09-01T01:40:02.382Z"),54,"September 1st 2016, 11:40 am: 54ms",null,null],[new Date("2016-09-01T01:50:03.630Z"),130,"September 1st 2016, 11:50 am: 130ms",null,null],[new Date("2016-09-01T02:00:04.367Z"),493,"September 1st 2016, 12:00 pm: 493ms",null,null],[new Date("2016-09-01T02:10:02.320Z"),89,"September 1st 2016, 12:10 pm: 89ms",null,null],[new Date("2016-09-01T02:20:02.548Z"),138,"September 1st 2016, 12:20 pm: 138ms",null,null],[new Date("2016-09-01T02:30:03.764Z"),121,"September 1st 2016, 12:30 pm: 121ms",null,null],[new Date("2016-09-01T02:40:03.535Z"),159,"September 1st 2016, 12:40 pm: 159ms",null,null],[new Date("2016-09-01T02:50:02.996Z"),160,"September 1st 2016, 12:50 pm: 160ms",null,null],[new Date("2016-09-01T03:00:02.181Z"),121,"September 1st 2016, 1:00 pm: 121ms",null,null],[new Date("2016-09-01T03:10:02.252Z"),78,"September 1st 2016, 1:10 pm: 78ms",null,null],[new Date("2016-09-01T03:20:03.317Z"),120,"September 1st 2016, 1:20 pm: 120ms",null,null],[new Date("2016-09-01T03:30:03.718Z"),137,"September 1st 2016, 1:30 pm: 137ms",null,null],[new Date("2016-09-01T03:40:03.350Z"),89,"September 1st 2016, 1:40 pm: 89ms",null,null],[new Date("2016-09-01T03:50:02.427Z"),155,"September 1st 2016, 1:50 pm: 155ms",null,null],[new Date("2016-09-01T04:00:02.588Z"),92,"September 1st 2016, 2:00 pm: 92ms",null,null],[new Date("2016-09-01T04:10:02.953Z"),143,"September 1st 2016, 2:10 pm: 143ms",null,null],[new Date("2016-09-01T04:20:02.356Z"),81,"September 1st 2016, 2:20 pm: 81ms",null,null],[new Date("2016-09-01T04:30:02.564Z"),67,"September 1st 2016, 2:30 pm: 67ms",null,null],[new Date("2016-09-01T04:40:02.599Z"),78,"September 1st 2016, 2:40 pm: 78ms",null,null],[new Date("2016-09-01T04:50:03.717Z"),127,"September 1st 2016, 2:50 pm: 127ms",null,null],[new Date("2016-09-01T05:00:03.122Z"),73,"September 1st 2016, 3:00 pm: 73ms",null,null],[new Date("2016-09-01T05:10:02.340Z"),107,"September 1st 2016, 3:10 pm: 107ms",null,null],[new Date("2016-09-01T05:20:02.493Z"),62,"September 1st 2016, 3:20 pm: 62ms",null,null],[new Date("2016-09-01T05:30:03.111Z"),109,"September 1st 2016, 3:30 pm: 109ms",null,null],[new Date("2016-09-01T05:40:02.454Z"),123,"September 1st 2016, 3:40 pm: 123ms",null,null],[new Date("2016-09-01T05:50:02.568Z"),66,"September 1st 2016, 3:50 pm: 66ms",null,null],[new Date("2016-09-01T06:00:03.478Z"),164,"September 1st 2016, 4:00 pm: 164ms",null,null],[new Date("2016-09-01T06:10:04.240Z"),167,"September 1st 2016, 4:10 pm: 167ms",null,null],[new Date("2016-09-01T06:20:03.536Z"),148,"September 1st 2016, 4:20 pm: 148ms",null,null],[new Date("2016-09-01T06:30:03.025Z"),134,"September 1st 2016, 4:30 pm: 134ms",null,null],[new Date("2016-09-01T06:40:02.280Z"),140,"September 1st 2016, 4:40 pm: 140ms",null,null]];
+		Page.ADDITIONS = {"fakeweek":{"mean":"104ms","availability":"99%"}};
+
+		Page.render.graph( $('.js-status-fake'), 'fake', 'week' );
+
+		$(window).resize(function() {
+			Page.render.graph( $('.js-status-fake'), 'fake', 'week' );
+		});
+	</script>
 </body>
 </html>
