@@ -958,12 +958,12 @@ var Page = (function() {
 
 				//iterate over each mean addition for rendering
 				$('.js-status-mean[data-ID="' + ID + '"][data-period="' + period + '"]').not('.js-rendered').each(function iterateAvailability() {
-					Page.render.addition( $(this), 'mean', $(this).attr('data-id'), $(this).attr('data-period') );
+					Page.render.addition( $(this), 'mean', ID, period );
 				});
 
 				//iterate over each availability addition for rendering
 				$('.js-status-availability[data-ID="' + ID + '"][data-period="' + period + '"]').not('.js-rendered').each(function iterateAvailability() {
-					Page.render.addition( $(this), 'availability', $(this).attr('data-id'), $(this).attr('data-period') );
+					Page.render.addition( $(this), 'availability', ID, period );
 				});
 			});
 		}
