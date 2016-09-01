@@ -2,7 +2,7 @@
  *
  * Render module
  *
- * Render DOM elements into graphs from data optained in the Page.data module.
+ * Render DOM elements into graphs from data obtained in the Page.data module.
  *
  **************************************************************************************************************************************************************/
 
@@ -17,7 +17,7 @@
 	//
 	// @param  [$graph]  {jQuery object}  The DOM element that has to be converted to a graph
 	// @param  [ID]      {string}         The ID of the dataset
-	// @param  [period]  {keyword}        The period/timeframe of the data
+	// @param  [period]  {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.graph = function( $graph, ID, period ) {
 		Page.debugging( 'Running render.graph', 'report' );
@@ -42,7 +42,7 @@
 					type: 'string',
 					role: 'tooltip',
 				});
-				graph.addColumn({ //We need annitations to show when the server was down
+				graph.addColumn({ //We need annotations to show when the server was down
 					type: 'string',
 					role: 'annotation',
 				});
@@ -97,7 +97,7 @@
 						},
 					},
 					tooltip: {
-						isHtml: true, //we need to remove some of the css here which is only possible if the tooltips are rendered as HTML
+						isHtml: true, //we need to remove some of the css here which is only possible if the tooltip are rendered as HTML
 					},
 					height: 270, //seems like a sweet spot
 				});
@@ -125,7 +125,7 @@
 	// @param  [$element]  {jQuery object}  The DOM element that has to be converted
 	// @param  [addition]  {keyword}        What kind of addition is it
 	// @param  [ID]        {string}         The ID of the dataset
-	// @param  [period]    {keyword}        The period/timeframe of the data
+	// @param  [period]    {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.addition = function( $element, addition, ID, period ) {
 		Page.debugging( 'Running render.addition', 'report' );

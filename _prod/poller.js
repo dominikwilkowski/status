@@ -328,7 +328,7 @@ Poller.fallback = (() => {
 	return {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Public function
-// Determine wheather and what fallback is to be taken.
+// Determine whether and what fallback is to be taken.
 //
 // @param  [item]  {object}   The ID and error in format: { ID: '[string]', error: '[string] error code' }
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------

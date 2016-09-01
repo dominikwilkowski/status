@@ -13,11 +13,11 @@
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Private function
-	// Reformat the data for graph ussage
+	// Reformat the data for graph usage
 	//
 	// @param  [data]    {object}   The unformatted data coming for the RESTful API
 	// @param  [ID]      {string}   The ID of the dataset
-	// @param  [period]  {keyword}  The period/timeframe of the data
+	// @param  [period]  {keyword}  The period/time frame of the data
 	//
 	// @return         {object}  Formated data object
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -70,7 +70,7 @@
 	//
 	// @param  [$element]  {jQuery object}  The DOM element that has to be converted to a graph
 	// @param  [ID]        {string}         The ID of the dataset
-	// @param  [period]    {keyword}        The period/timeframe of the data
+	// @param  [period]    {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.get = function( $element, ID, period ) {
 		Page.debugging( 'Running data.get for ' + ID, 'report' );
@@ -93,7 +93,7 @@
 
 					$element.addClass('js-rendered'); //mark as rendered
 
-					Page.DATA[ ID + period ] = format( data, ID, period ); //store data render and rerenders
+					Page.DATA[ ID + period ] = format( data, ID, period ); //store data render and re-renders
 
 					Page.render.graph( $element, ID, period ); //gender the graph now that we have the data
 				},

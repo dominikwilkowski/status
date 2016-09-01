@@ -37,7 +37,7 @@
 			}
 		});
 
-		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
+		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load Google charts lib
 
 		$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each graph element for rendering
 			var $this = $(this);
