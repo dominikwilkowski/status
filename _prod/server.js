@@ -181,10 +181,10 @@ Server.data = (() => {
 			Server.debugging.report(`Running data.get for "${request.params.ID}" within ${request.params.period}`, 1);
 
 			let newDocs = []; //for thinning out the result later
-			let timestamp = Moment().subtract( 1, 'd' ).toDate(); //timestand to look for in DB
+			let timestamp = Moment().subtract( 1, 'd' ).toDate(); //timestamp to look for in DB
 			let interval = 1; //for thinning out data
 
-			//error handeling
+			//error handling
 			if( request.params.period.length < 1 || Server.TIMEFRAME.indexOf( request.params.period ) === -1 ) {
 				result.send(400, new Error(`Please select the time frame. Allowed keywords are: ${Server.TIMEFRAME.join(', ')}`));
 			}
@@ -193,7 +193,7 @@ Server.data = (() => {
 				result.send(400, new Error(`Please select the ID`));
 			}
 
-			//options for timeframes
+			//options for time-frames
 			if( request.params.period === 'week' ) {
 				timestamp = Moment().subtract( 7, 'd' ).toDate();
 				interval = 7;

@@ -750,11 +750,11 @@ var Page = (function() {
 
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Private function
-	// Reformat the data for graph ussage
+	// Reformat the data for graph usage
 	//
 	// @param  [data]    {object}   The unformatted data coming for the RESTful API
 	// @param  [ID]      {string}   The ID of the dataset
-	// @param  [period]  {keyword}  The period/timeframe of the data
+	// @param  [period]  {keyword}  The period/time frame of the data
 	//
 	// @return         {object}  Formated data object
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -807,7 +807,7 @@ var Page = (function() {
 	//
 	// @param  [$element]  {jQuery object}  The DOM element that has to be converted to a graph
 	// @param  [ID]        {string}         The ID of the dataset
-	// @param  [period]    {keyword}        The period/timeframe of the data
+	// @param  [period]    {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.get = function( $element, ID, period ) {
 		Page.debugging( 'Running data.get for ' + ID, 'report' );
@@ -830,7 +830,7 @@ var Page = (function() {
 
 					$element.addClass('js-rendered'); //mark as rendered
 
-					Page.DATA[ ID + period ] = format( data, ID, period ); //store data render and rerenders
+					Page.DATA[ ID + period ] = format( data, ID, period ); //store data render and re-renders
 
 					Page.render.graph( $element, ID, period ); //gender the graph now that we have the data
 				},
@@ -854,7 +854,7 @@ var Page = (function() {
  *
  * Render module
  *
- * Render DOM elements into graphs from data optained in the Page.data module.
+ * Render DOM elements into graphs from data obtained in the Page.data module.
  *
  **************************************************************************************************************************************************************/
 
@@ -869,7 +869,7 @@ var Page = (function() {
 	//
 	// @param  [$graph]  {jQuery object}  The DOM element that has to be converted to a graph
 	// @param  [ID]      {string}         The ID of the dataset
-	// @param  [period]  {keyword}        The period/timeframe of the data
+	// @param  [period]  {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.graph = function( $graph, ID, period ) {
 		Page.debugging( 'Running render.graph', 'report' );
@@ -894,7 +894,7 @@ var Page = (function() {
 					type: 'string',
 					role: 'tooltip',
 				});
-				graph.addColumn({ //We need annitations to show when the server was down
+				graph.addColumn({ //We need annotations to show when the server was down
 					type: 'string',
 					role: 'annotation',
 				});
@@ -949,7 +949,7 @@ var Page = (function() {
 						},
 					},
 					tooltip: {
-						isHtml: true, //we need to remove some of the css here which is only possible if the tooltips are rendered as HTML
+						isHtml: true, //we need to remove some of the css here which is only possible if the tooltip are rendered as HTML
 					},
 					height: 270, //seems like a sweet spot
 				});
@@ -977,7 +977,7 @@ var Page = (function() {
 	// @param  [$element]  {jQuery object}  The DOM element that has to be converted
 	// @param  [addition]  {keyword}        What kind of addition is it
 	// @param  [ID]        {string}         The ID of the dataset
-	// @param  [period]    {keyword}        The period/timeframe of the data
+	// @param  [period]    {keyword}        The period/time frame of the data
 	//--------------------------------------------------------------------------------------------------------------------------------------------------------------
 	module.addition = function( $element, addition, ID, period ) {
 		Page.debugging( 'Running render.addition', 'report' );
@@ -1041,7 +1041,7 @@ var Page = (function() {
 			}
 		});
 
-		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load google charts lib
+		google.charts.load( 'current', { packages: ['corechart', 'line'] } ); //load Google charts lib
 
 		$('.js-status').not('.js-rendered').each(function iterateGraphs() { //iterate over each graph element for rendering
 			var $this = $(this);
