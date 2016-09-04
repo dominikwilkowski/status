@@ -55,7 +55,10 @@
 
 				chart.draw( graph, Page.GRAPH );
 
-				$graph.addClass('is-rendered'); //add class so we can remove the loading pseudo element
+				$graph
+					.removeClass('is-loading') //not loading anymore
+					.addClass('is-rendered'); //add class so we can remove the loading pseudo element
+
 
 				//iterate over each mean addition for rendering
 				$('.js-status-mean[data-ID="' + ID + '"][data-period="' + period + '"]').not('.js-rendered').each(function iterateAvailability() {
