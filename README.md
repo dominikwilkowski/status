@@ -137,9 +137,11 @@ The connection is established locally via `mongodb://127.0.0.1:27017`. You can c
 The page is just an example of how you could visualize the data on a page. I use [Google charts](https://developers.google.com/chart/) to draw an SVG graph
 with a data table fallback for screen readers.
 
-### Install
+### The install
 
-To make the script include the `page.js` script at the bottom of your page _(it includes jQuery 3.1.0)_.
+_The page_ requires [jQuery](http://jquery.com/), [Moment.js](http://momentjs.com/) and [Google Charts](https://developers.google.com/chart/interactive/docs/).
+Include the `page.js` script at the bottom of your page after all dependencies as seen below.
+The page code also requires some CSS code that I have attached below as well.
 
 ```HTML
 <body>
@@ -147,12 +149,78 @@ To make the script include the `page.js` script at the bottom of your page _(it 
 
 	<div class="js-status graph" data-id="ID" data-period="day"></div>
 
+	<script src="_prod/jquery-3.1.0.min.js"></script>
+	<script src="_prod/moment.min.js"></script>
+	<script src="_prod/google-charts.js"></script>
 	<script src="_prod/page.js"></script>
 	<script type="text/javascript">
 		Page.ENDPOINTS = 'http://yourdomain.com/status/';
 		Page.init();
 	</script>
 </body>
+```
+
+Required CSS
+
+```css
+body {
+	background: #263238; /* Adjust to your liking */
+	color: #fff;
+}
+
+.graph {
+	position: relative;
+	max-width: 1000px;
+	height: 270px;
+}
+
+.graph.is-loading::after { /* The loading animation */
+	content: 'LOADING';
+	position: absolute;
+	font-family: sans-serif;
+	font-weight: 900;
+	color: #ef4723;
+	left: 50%;
+	top: 50%;
+	margin: -9px 0 0 -37px;
+	animation: hue 0.7s infinite linear;
+}
+
+.graph.has-error::after {
+	display: none;
+}
+
+.graph.has-error {
+	width: auto;
+	height: auto;
+	color: gray;
+}
+
+.no-js .graph { /* Hide when js is turned off */
+	display:  none;
+}
+
+div.google-visualization-tooltip {
+	border: none;
+	box-shadow: none;
+}
+
+@-webkit-keyframes hue {
+	from {
+		-webkit-filter:hue-rotate(0)
+	}
+	to {
+		-webkit-filter:hue-rotate(-360deg)
+	}
+}
+@keyframes hue {
+	from {
+		-webkit-filter:hue-rotate(0)
+	}
+	to {
+		-webkit-filter:hue-rotate(-360deg)
+	}
+}
 ```
 
 ### The graph HTML
@@ -203,7 +271,7 @@ An example for a light graph would be
 ![Light graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-light.png)
 
 ```js
-Page.ENDPOINTS = {
+Page.GRAPH = {
 	title: 'The network response time',
 	titlePosition: 'none',
 	colors: ['#000'],
@@ -245,7 +313,7 @@ And an example for a dark graph
 ![Dark graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-dark.png)
 
 ```js
-Page.ENDPOINTS = {
+Page.GRAPH = {
 	title: 'The network response time',
 	titlePosition: 'none',
 	colors: ['#42a5f5'],
@@ -432,7 +500,7 @@ The grunt task will automatically concatenate all node and javascript into the `
 So far I only have one test-server that I use to spoof response times. Once run with `node test/test-server.js` the server will listen on port `8080` and
 `8081`.
 
-* Requests to `8080` will have a randomized lag that can exceeds the timeout of the poller. _(That way I can test a no responsive service)_.
+* Requests to `8080` will have a randomized lag that can exceeds the timeout of the poller. _(That way I can test a none responsive service)_.
 * Requests to `8081` will answer right away.
 
 
@@ -444,6 +512,7 @@ So far I only have one test-server that I use to spoof response times. Once run 
 
 ## Release History remote
 
+* v1.0.0 - Improved no-js fallback, split dependencies out into extra files
 * v0.1.1 - Added config and removed self calling `init()`
 * v0.1.0 - First round
 

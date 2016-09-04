@@ -77,6 +77,7 @@ module.exports = function(grunt) {
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
 	// Dependencies
 	//------------------------------------------------------------------------------------------------------------------------------------------------------------
+	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-text-replace');
@@ -186,6 +187,13 @@ module.exports = function(grunt) {
 				],
 				dest: '<%= SETTINGS.folder.dev %><%= SETTINGS.file.page %>',
 			},
+		},
+
+
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		// Uglify page files
+		//----------------------------------------------------------------------------------------------------------------------------------------------------------
+		uglify: {
 			pageProd: {
 				src: [
 					'<%= SETTINGS.folder.page %>/*.js',
@@ -282,7 +290,7 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('_buildPage', [
 		'concat:pageDev',
-		'concat:pageProd',
+		'uglify:pageProd',
 		'replace:pageDev',
 		'replace:pageProd',
 	]);

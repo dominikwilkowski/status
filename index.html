@@ -35,7 +35,7 @@
 			height: 270px;
 		}
 
-		.graph::after {
+		.graph.is-loading::after {
 			content: 'LOADING';
 			position: absolute;
 			font-family: sans-serif;
@@ -47,7 +47,6 @@
 			animation: hue 0.7s infinite linear;
 		}
 
-		.graph.is-rendered::after,
 		.graph.has-error::after {
 			display: none;
 		}
@@ -223,6 +222,9 @@
 			This code it open source under the <a href="https://raw.githubusercontent.com/dominikwilkowski/status/master/LICENSE">GLPv3 license</a>.
 		</p>
 
+	<script src="_prod/jquery-3.1.0.min.js"></script>
+	<script src="_prod/moment.min.js"></script>
+	<script src="_prod/google-charts.js"></script>
 	<script src="_prod/page.js"></script>
 	<script type="text/javascript">
 		Page.ENDPOINTS = '';

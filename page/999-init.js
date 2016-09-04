@@ -49,6 +49,8 @@
 				var ID = $this.attr('data-id');
 				var period = $this.attr('data-period');
 
+				$this.addClass('is-loading');
+
 				if( Page.DATA[ ID + period ] !== undefined ) { //if we already have the data
 					Page.render.graph( $this, ID, period ); //generate graph
 				}
