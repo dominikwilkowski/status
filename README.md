@@ -141,6 +141,7 @@ with a data table fallback for screen readers.
 
 _The page_ requires [jQuery](http://jquery.com/), [Moment.js](http://momentjs.com/) and [Google Charts](https://developers.google.com/chart/interactive/docs/).
 Include the `page.js` script at the bottom of your page after all dependencies as seen below.
+The page code also requires some CSS code that I have attached below as well.
 
 ```HTML
 <body>
@@ -157,6 +158,69 @@ Include the `page.js` script at the bottom of your page after all dependencies a
 		Page.init();
 	</script>
 </body>
+```
+
+Required CSS
+
+```css
+body {
+	background: #263238; /* Adjust to your liking */
+	color: #fff;
+}
+
+.graph {
+	position: relative;
+	max-width: 1000px;
+	height: 270px;
+}
+
+.graph.is-loading::after { /* The loading animation */
+	content: 'LOADING';
+	position: absolute;
+	font-family: sans-serif;
+	font-weight: 900;
+	color: #ef4723;
+	left: 50%;
+	top: 50%;
+	margin: -9px 0 0 -37px;
+	animation: hue 0.7s infinite linear;
+}
+
+.graph.has-error::after {
+	display: none;
+}
+
+.graph.has-error {
+	width: auto;
+	height: auto;
+	color: gray;
+}
+
+.no-js .graph { /* Hide when js is turned off */
+	display:  none;
+}
+
+div.google-visualization-tooltip {
+	border: none;
+	box-shadow: none;
+}
+
+@-webkit-keyframes hue {
+	from {
+		-webkit-filter:hue-rotate(0)
+	}
+	to {
+		-webkit-filter:hue-rotate(-360deg)
+	}
+}
+@keyframes hue {
+	from {
+		-webkit-filter:hue-rotate(0)
+	}
+	to {
+		-webkit-filter:hue-rotate(-360deg)
+	}
+}
 ```
 
 ### The graph HTML
@@ -207,7 +271,7 @@ An example for a light graph would be
 ![Light graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-light.png)
 
 ```js
-Page.ENDPOINTS = {
+Page.GRAPH = {
 	title: 'The network response time',
 	titlePosition: 'none',
 	colors: ['#000'],
@@ -249,7 +313,7 @@ And an example for a dark graph
 ![Dark graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-dark.png)
 
 ```js
-Page.ENDPOINTS = {
+Page.GRAPH = {
 	title: 'The network response time',
 	titlePosition: 'none',
 	colors: ['#42a5f5'],

@@ -35,7 +35,7 @@
 			height: 270px;
 		}
 
-		.graph::after {
+		.graph.is-loading::after {
 			content: 'LOADING';
 			position: absolute;
 			font-family: sans-serif;
@@ -47,7 +47,6 @@
 			animation: hue 0.7s infinite linear;
 		}
 
-		.graph.is-rendered::after,
 		.graph.has-error::after {
 			display: none;
 		}
