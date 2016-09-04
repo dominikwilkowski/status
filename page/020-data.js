@@ -38,7 +38,7 @@
 
 			if( data[i].time === -1 ) {
 				annotation = 'Down';
-				annotationText = 'The service was down on ' + date;
+				annotationText = 'The service was down on ' + date + ' with error "' + data[i].error + '"';
 				data[i].time = 0;
 				availability ++; //count how many times we were down
 			}
@@ -95,7 +95,7 @@
 
 					Page.DATA[ ID + period ] = format( data, ID, period ); //store data render and re-renders
 
-					Page.render.graph( $element, ID, period ); //gender the graph now that we have the data
+					Page.render.graph( $element, ID, period ); //generate the graph now that we have the data
 				},
 				error: function(jqXHR, status, errorThrown) {
 					Page.debugging( 'Data error for ' + ID + ' with: ' + errorThrown, 'error' );

@@ -1,7 +1,7 @@
 {
 	"name": "status",
 	"description": "Status, a network status tool in three acts",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"homepage": "https://github.com/dominikwilkowski/status",
 	"author": {
 		"name": "Dominik Wilkowski",
