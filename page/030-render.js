@@ -53,54 +53,7 @@
 
 				graph.addRows( graphData ); //add data to graph
 
-				chart.draw(graph, { //chart options
-					title: 'The network response time of ' + ID + ' for a ' + period, //not sure where this is used
-					titlePosition: 'none', //we certainly don’t want to show it
-					colors: ['#42a5f5'], //the line color
-					backgroundColor: '#263238', //background color duh!
-					lineWidth: 1,  //looks nicer with the amount of data
-					hAxis: {
-						slantedText: false, //nah that looks weird
-						maxAlternation: 1, //no alternating multiple lines
-						textStyle: {
-							color: '#fff',
-						},
-						gridlines: {
-							color: '#556E79',
-						},
-					},
-					vAxis: {
-						title: 'Response time',
-						titleTextStyle: {
-							color: '#42a5f5',
-						},
-						textStyle: {
-							color: '#fff',
-						},
-						gridlines: {
-							color: '#556E79',
-						},
-					},
-					legend: {
-						position: 'none' //ugly
-					},
-					chartArea: {
-						height: '200' //height is fixed so annotations can be positioned
-					},
-					annotations: {
-						textStyle: {
-							color: '#c80038',
-						},
-						stem: {
-							color: '#c80038',
-							length: 202, //position the "down" markers nicely
-						},
-					},
-					tooltip: {
-						isHtml: true, //we need to remove some of the css here which is only possible if the tooltip are rendered as HTML
-					},
-					height: 270, //seems like a sweet spot
-				});
+				chart.draw( graph, Page.GRAPH );
 
 				$graph.addClass('is-rendered'); //add class so we can remove the loading pseudo element
 

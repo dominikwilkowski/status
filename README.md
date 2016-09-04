@@ -3,6 +3,9 @@ STATUS
 
 > A network status tool in three acts.
 
+| ![Light graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-light.png) | ![Dark graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-dark.png) |
+|---|---|
+
 **Act I**
 The **_poller_** that takes a `queue.json` with services and polls them via a `cron` script and saves the request time into a mongo database.
 
@@ -134,6 +137,23 @@ The connection is established locally via `mongodb://127.0.0.1:27017`. You can c
 The page is just an example of how you could visualize the data on a page. I use [Google charts](https://developers.google.com/chart/) to draw an SVG graph
 with a data table fallback for screen readers.
 
+### Install
+
+To make the script include the `page.js` script at the bottom of your page _(it includes jQuery 3.1.0)_.
+
+```HTML
+<body>
+	<p>Your HTML page and content</p>
+
+	<div class="js-status graph" data-id="ID" data-period="day"></div>
+
+	<script src="_prod/page.js"></script>
+	<script type="text/javascript">
+		Page.ENDPOINTS = 'http://yourdomain.com/status/';
+		Page.init();
+	</script>
+</body>
+```
 
 ### The graph HTML
 
@@ -168,6 +188,122 @@ _Additions can only work in conjunction with graphs of the same ID and period._
 
 
 ### The Javascript
+
+#### Settings
+
+To make the script work for you, adjust the below settings to your liking.
+
+```js
+Page.ENDPOINTS = '';  //the URL of the RESTful server to get the data from the db
+Page.GRAPH = {};      //you can set the style of the graph here. For more infos have a look at the references over at Google Chart
+                      //https://developers.google.com/chart/interactive/docs/gallery/linechart
+```
+
+An example for a light graph would be  
+![Light graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-light.png)
+
+```js
+Page.ENDPOINTS = {
+	title: 'The network response time',
+	titlePosition: 'none',
+	colors: ['#000'],
+	backgroundColor: '#f6f7eb',
+	lineWidth: 1,
+	hAxis: {
+		slantedText: false,
+		maxAlternation: 1,
+		gridlines: {
+			color: '#556e79',
+		},
+	},
+	vAxis: {
+		title: 'Response time',
+		gridlines: {
+			color: '#556e79',
+		},
+	},
+	legend: {
+		position: 'none'
+	},
+	chartArea: {
+		height: '200'
+	},
+	annotations: {
+		textStyle: {
+			color: '#e94f37',
+		},
+		stem: {
+			color: '#e94f37',
+			length: 202,
+		},
+	},
+	height: 270,
+};
+```
+
+And an example for a dark graph  
+![Dark graph](https://raw.githubusercontent.com/dominikwilkowski/status/master/assets/graph-dark.png)
+
+```js
+Page.ENDPOINTS = {
+	title: 'The network response time',
+	titlePosition: 'none',
+	colors: ['#42a5f5'],
+	backgroundColor: '#263238',
+	lineWidth: 1,
+	hAxis: {
+		slantedText: false,
+		maxAlternation: 1,
+		textStyle: {
+			color: '#fff',
+		},
+		gridlines: {
+			color: '#556e79',
+		},
+	},
+	vAxis: {
+		title: 'Response time',
+		titleTextStyle: {
+			color: '#42a5f5',
+		},
+		textStyle: {
+			color: '#fff',
+		},
+		gridlines: {
+			color: '#556e79',
+		},
+	},
+	legend: {
+		position: 'none'
+	},
+	chartArea: {
+		height: '200'
+	},
+	annotations: {
+		textStyle: {
+			color: '#c80038',
+		},
+		stem: {
+			color: '#c80038',
+			length: 202,
+		},
+	},
+	tooltip: {
+		isHtml: true,
+	},
+	height: 270,
+};
+```
+
+#### `Page.init`
+Type: `<public method>`
+
+To start requesting, converting and rendering your data you need to run `Page.init()`. The fact that this is not run automatically gives you the ability
+to adjust settings without having to change the js file.
+
+```js
+Page.init();
+```
 
 #### `Page.data.get`
 Type: `<public method>`
@@ -308,6 +444,7 @@ So far I only have one test-server that I use to spoof response times. Once run 
 
 ## Release History remote
 
+* v0.1.1 - Added config and removed self calling `init()`
 * v0.1.0 - First round
 
 **[⬆ back to top](#content)**
