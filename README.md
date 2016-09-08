@@ -15,6 +15,12 @@ The **_server_** that serves a RESTful API around the data takes `ID` and `perio
 **Act III**
 The **_page_** that queries the REST server and visualizes the data in a Google graph.
 
+## Examples
+
+* http://dominikwilkowski.github.io/status/
+* https://gel.westpacgroup.com.au/status/
+* https://dominik-wilkowski.com/status/
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
