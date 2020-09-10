@@ -518,6 +518,7 @@ So far I only have one test-server that I use to spoof response times. Once run 
 
 ## Release History remote
 
+* v1.0.1 - Updated dependencies
 * v1.0.0 - Improved no-js fallback, split dependencies out into extra files
 * v0.1.1 - Added config and removed self calling `init()`
 * v0.1.0 - First round
